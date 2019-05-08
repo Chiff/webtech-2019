@@ -1,26 +1,25 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once('../src/helpers.php');
+require_once('../src/csv/results-importer.php');
+require_once('../src/csv/user-importer.php');
 
-require_once('../src/Controller/csv-controller.php');
+if (isset($_POST["results"]) && isset($_FILES["file"])) {
+    $results = new ResultsImporter();
+    $results->autoPilot($_POST["delimiter"], true);
+}
 
-if (isset($_POST["submit"]) && isset($_FILES["file"])) {
-    $foo = new CsvController();
-    $foo->autoPilot($_POST["delimiter"], true);
+if (isset($_POST["users"]) && isset($_FILES["file"])) {
+    $users = new UserImporter();
+    $users->autoPilot($_POST["delimiter"], true);
 }
 
 ?>
 <!DOCTYPE html>
 <head>
-    <title>Zadanie</title>
-
-    <link rel="stylesheet" type="text/css" href="http://147.175.121.210:8153/z2/style.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../assets/js/main.js"></script>
-</head>
+    <title>Import test</title>
+    <?php writeHead() ?></head>
 <body>
+<h2>Admin import bodov</h2>
 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
     <label>
         Vyber CSV na import
@@ -30,6 +29,19 @@ if (isset($_POST["submit"]) && isset($_FILES["file"])) {
         Delimiter
         <input type="text" name="delimiter" value=";" required>
     </label>
-    <input type="submit" name="submit"/>
+    <input type="submit" name="results"/>
+</form>
+
+<h2>Admin import uzivatelov</h2>
+<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
+    <label>
+        Vyber CSV na import
+        <input type="file" name="file" required>
+    </label>
+    <label>
+        Delimiter
+        <input type="text" name="delimiter" value=";" required>
+    </label>
+    <input type="submit" name="users"/>
 </form>
 </body>

@@ -1,9 +1,9 @@
 <?php
 
-class CsvController {
-    private $uploadDir = '/home/xfilom/public_html/Zaver/uploaded/';
-    private $uploadFile = null;
-    private $data = array();
+class CsvImporter {
+    protected $uploadDir = '/home/xfilom/public_html/Zaver/uploaded/';
+    protected $uploadFile = null;
+    protected $data = null;
 
     function autoPilot($delimiter, $verbose = false) {
         $this->saveCSV();
@@ -14,13 +14,9 @@ class CsvController {
 
         if (isset($this->data) && $verbose) {
             echo json_encode($this->data);
-
-            return $this->data;
         } else if ($verbose) {
             echo "Data sa nepodarilo ziskat";
         }
-
-        return null;
     }
 
     function saveCSV(): string {
@@ -30,8 +26,6 @@ class CsvController {
         }
 
         $uploadFile = $this->uploadDir . basename($_FILES['file']['name']);
-
-        echo "<p>";
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile)) {
             $this->uploadFile = $uploadFile;
@@ -44,7 +38,7 @@ class CsvController {
 
     function readCSV($uploadFile, $delimiter = ";") {
         if (!($file = fopen($uploadFile, 'r')))
-            return;
+            return null;
 
         $firstLine = fgets($file, 4096);
         $itemCount = strlen($firstLine) - strlen(str_replace($delimiter, "", $firstLine)) + 1;

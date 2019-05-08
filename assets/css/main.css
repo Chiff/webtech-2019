@@ -13,3 +13,15 @@ input[type=file] {
     box-sizing: border-box;
     height: 41px;
 }
+
+
+.import-log {
+    display:  block;
+}
+.import-log.none {
+    display: none;
+}
+
+.import-log.errors-only .row-valid {
+    display: none;
+}
