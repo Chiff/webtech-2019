@@ -7,18 +7,18 @@ if ($enableDebug) {
     error_reporting(E_ALL);
 }
 
-function writeHead() {
-    $dir = dirname(__DIR__, 1);
-    $baseFolder = "http://" . $_SERVER['HTTP_HOST'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", $dir);
-
-    echo "
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"http://147.175.121.210:8153/z2/style.css\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $baseFolder . "/assets/css/main.css\">
-    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>
-    <script src=\"" . $baseFolder . "/assets/js/main.js\"></script>
-    ";
-}
-
 function stringExists($str) {
     return (isset($str) && trim($str) !== '');
+}
+
+function writeError($code, $title, $detail = 'Detail not specified')
+{
+    $response = array();
+    $response['error'] = array();
+    $response['error']['code'] = $code;
+    $response['error']['title'] = $title;
+    $response['error']['detail'] = $detail;
+
+    echo json_encode($response);
+    http_response_code($code);
 }

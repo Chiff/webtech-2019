@@ -3,13 +3,12 @@ require_once('../../src/helpers.php');
 ?>
 <!DOCTYPE html>
 <head>
-    <title>Import testss</title>
-    <?php writeHead() ?>
+    <title>Admin</title>
+    <?php include('../head.php'); ?>
+    <?php echo "<script src='admin.js' type='module'></script>"; // lebo php ¯\_(ツ)_/¯ ?>
 </head>
 <body>
-<nav>
-    <a href="../">Uvod</a>
-</nav>
+<?php include('../nav.php'); ?>
 <h2>Vytovernie noveho predmetu</h2>
 <form action="add-subject.php" method="post" id="addSub">
     <label>
@@ -20,12 +19,30 @@ require_once('../../src/helpers.php');
         Zadaj nazov predmetu
         <input type="text" name="subject" required>
     </label>
-    <input type="hidden" value="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>"
-           name="redirect"/>
     <input type="submit" name="addSub"/>
 
     <?php if (isset($_GET['form']) && $_GET['form'] == 'addSub')
-        echo "<div class=\"form-message " . $_GET['type'] . "\">" . $_GET['message'] . "</div>";
+        echo "<div class='form-message " . $_GET['type'] . "'>" . $_GET['message'] . "</div>";
+    ?>
+</form>
+
+<h2>Vytovernie noveho projektu</h2>
+<form action="add-project.php" method="post" id="addProject">
+    <div class="combo-wrapper async">
+        <label for="subject" class="combo">Zadaj nazov predmetu</label>
+        <input type="text" class="combo" id="subject" name="subject" required autocomplete="off">
+        <ul style="display: none;" id="subject-list">
+            <li data-disabled="true">Udaje sa načítavajú</li>
+        </ul>
+    </div>
+    <label>
+        Zadaj nazov projektu
+        <input type="text" name="project" required>
+    </label>
+    <input type="submit" name="addProject"/>
+
+    <?php if (isset($_GET['form']) && $_GET['form'] == 'addProject')
+        echo "<div class='form-message " . $_GET['type'] . "'>" . $_GET['message'] . "</div>";
     ?>
 </form>
 </body>

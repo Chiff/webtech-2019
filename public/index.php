@@ -27,12 +27,10 @@ if (!isset($_SESSION['username'])) {
 <!DOCTYPE html>
 <head>
     <title>Import test</title>
-    <?php writeHead() ?>
+    <?php include('head.php'); ?>
 </head>
 <body>
-<nav>
-    <a href="admin/">Admin</a>
-</nav>
+<?php include('nav.php'); ?>
 <div id = "tmpDvv">
     <!--netrebalo by if-->
     <h1>Welcome <?php if (isset($_SESSION["username"])) echo $_SESSION["username"];  ?></h1>

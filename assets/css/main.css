@@ -36,3 +36,34 @@ input[type=file] {
 .import-log.errors-only .row-valid {
     display: none;
 }
+
+.combo-wrapper {
+    position: relative;
+}
+
+#subject-list {
+    position: absolute;
+    z-index: 99;
+    background: white;
+    width: calc(100% - 33px);
+    margin: 0;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    list-style: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+}
+
+#subject-list li {
+    cursor: pointer;
+    padding: 4px 20px;
+    display: block;
+}
+
+#subject-list li:hover {
+    color: #4CAF50;
+}
+
