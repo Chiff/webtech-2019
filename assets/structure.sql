@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2019 at 10:58 AM
+-- Generation Time: May 09, 2019 at 07:42 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 7.2.15-0ubuntu0.18.04.1
 
@@ -80,7 +80,7 @@ CREATE TABLE `student_subject` (
 CREATE TABLE `subject` (
   `id` int(11) NOT NULL,
   `label` varchar(100) NOT NULL,
-  `year` varchar(30) NOT NULL
+  `year` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -94,7 +94,8 @@ CREATE TABLE `team` (
   `project_id` int(11) NOT NULL,
   `captain_id` int(11) NOT NULL,
   `points` int(11) DEFAULT NULL,
-  `admin_agree` tinyint(1) DEFAULT NULL
+  `admin_agree` tinyint(1) DEFAULT NULL,
+  `team_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -119,6 +120,7 @@ CREATE TABLE `teammate` (
 --
 ALTER TABLE `project`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `label` (`label`,`subject_id`),
   ADD KEY `subject_id_project` (`subject_id`);
 
 --
@@ -146,14 +148,15 @@ ALTER TABLE `student_subject`
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`label`,`year`),
+  ADD UNIQUE KEY `label` (`label`,`year`);
 
 --
 -- Indexes for table `team`
 --
 ALTER TABLE `team`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `project_id` (`project_id`),
+  ADD UNIQUE KEY `project_id` (`project_id`,`team_number`),
   ADD KEY `student_id_team` (`captain_id`);
 
 --
@@ -171,7 +174,7 @@ ALTER TABLE `teammate`
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `result`
 --
@@ -186,7 +189,7 @@ ALTER TABLE `student_subject`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `team`
 --
@@ -195,12 +198,6 @@ ALTER TABLE `team`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `project`
---
-ALTER TABLE `project`
-  ADD CONSTRAINT `subject_id_project` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `result`
