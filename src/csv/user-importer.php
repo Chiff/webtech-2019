@@ -2,6 +2,7 @@
 require_once('csv-importer.php');
 
 class UserImporter extends CsvImporter {
+    public $message = null;
 
     function autoPilot($delimiter, $verbose = false) {
         $this->saveCSV();
@@ -11,32 +12,35 @@ class UserImporter extends CsvImporter {
         }
 
         if (isset($this->data) && $verbose && $this->isCsvValid()) {
-            echo json_encode($this->data);
-//            echo print_r($this->data);
+            $this->message = json_encode($this->data);
         } else if ($verbose) {
-            echo "Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV";
+            $this->message = "Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV" . $this->message;
         }
     }
 
     function isCsvValid() {
         $valid = true;
 
-        echo "<div class='import-log errors-only'>";
+        $this->message = "<div class='import-log errors-only'>";
         foreach ($this->data as $key => $row) {
             if (stringExists($row['ID']) && stringExists($row['meno']) && stringExists($row['email']) && stringExists($row['tim'])) {
-                echo "<div class='row-valid'><span style='color: lime'>ROW VALID </span><br>";
+                $this->message .= "<div class='row-valid'><span style='color: lime'>ROW VALID </span><br>";
             } else {
-                echo "<div class='row-invalid'><span style='color: red'>ROW INVALID </span><br>";
+                $this->message .= "<div class='row-invalid'><span style='color: red'>ROW INVALID </span><br>";
                 $valid = false;
             }
 
             foreach ($row as $label => $value)
-                echo $label . " : " . $value . "<br>";
+                $this->message .= $label . " : " . $value . "<br>";
 
-            echo "</div>";
+            $this->message .= "</div>";
         }
-        echo "</div>";
+        $this->message .= "</div>";
 
         return $valid;
+    }
+
+    public function getMessage() {
+        return $this->message;
     }
 }
