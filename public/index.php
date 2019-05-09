@@ -12,7 +12,17 @@ if (isset($_POST["users"]) && isset($_FILES["file"])) {
     $users = new UserImporter();
     $users->autoPilot($_POST["delimiter"], true);
 }
-
+//temporary....................
+session_start();
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login/index.php');
+} else if (isset($_POST['log_out'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: login/index.php");
+}
+// end temporary....................
 ?>
 <!DOCTYPE html>
 <head>
@@ -20,6 +30,17 @@ if (isset($_POST["users"]) && isset($_FILES["file"])) {
     <?php writeHead() ?>
 </head>
 <body>
+<div id = "tmpDvv">
+    <!--netrebalo by if-->
+    <h1>Welcome <?php if (isset($_SESSION["username"])) echo $_SESSION["username"];  ?></h1>
+    <h2>Log in through <?php if (isset($_SESSION["login"])) echo $_SESSION["login"];  ?></h2>
+
+    <form method="post">
+        <button type="submit" name="log_out">
+            Odhlásiť sa
+        </button>
+    </form>
+</div>
 <h2>Admin import bodov</h2>
 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
     <label>
