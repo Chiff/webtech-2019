@@ -3,6 +3,7 @@ input[type=file]:focus {
     outline: none;
 }
 
+.form-message,
 input[type=file] {
     width: 100%;
     padding: 12px 20px;
@@ -12,6 +13,16 @@ input[type=file] {
     border-radius: 4px;
     box-sizing: border-box;
     height: 41px;
+}
+
+.form-message.error {
+    height: initial;
+    border-color: indianred;
+}
+
+.form-message.success {
+    height: initial;
+    border-color: limegreen;
 }
 
 

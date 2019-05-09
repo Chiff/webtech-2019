@@ -4,8 +4,7 @@ session_start();
 $db = mysqli_connect($hostname, $username, $password, $dbname);
 
 // Check connection
-if (mysqli_connect_errno())
-{
+if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 date_default_timezone_set('	Europe/Bratislava');
@@ -78,8 +77,8 @@ mysqli_close($db);
         </div>
         <button type="submit" name="login_user"><strong>Prihlásiť sa</strong>
         </button>
+    </form>
 </div>
-</form>
 
 </body>
 </html>

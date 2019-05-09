@@ -30,6 +30,9 @@ if (!isset($_SESSION['username'])) {
     <?php writeHead() ?>
 </head>
 <body>
+<nav>
+    <a href="admin/">Admin</a>
+</nav>
 <div id = "tmpDvv">
     <!--netrebalo by if-->
     <h1>Welcome <?php if (isset($_SESSION["username"])) echo $_SESSION["username"];  ?></h1>
