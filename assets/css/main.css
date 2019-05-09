@@ -41,7 +41,7 @@ input[type=file] {
     position: relative;
 }
 
-#subject-list {
+.combo-wrapper ul {
     position: absolute;
     z-index: 99;
     background: white;
@@ -57,13 +57,13 @@ input[type=file] {
     border: 2px solid #4CAF50;
 }
 
-#subject-list li {
+.combo-wrapper ul li {
     cursor: pointer;
     padding: 4px 20px;
     display: block;
 }
 
-#subject-list li:hover {
+.combo-wrapper ul li:hover {
     color: #4CAF50;
 }
 

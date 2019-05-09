@@ -7,6 +7,35 @@ $(document).ready(() => {
 		codeTableUrl: '../codetable.php?table=subject'
 	});
 
+	combo({
+		queryString: '#subject-list-import',
+		isAsync: true,
+		codeTableUrl: '../codetable.php?table=subject'
+	});
+
+	$('#subject-import').focusout(function () {
+		const $this = $(this);
+		const $project = $("#project-import");
+
+		const prevVal = $this.val();
+		setTimeout(function () {
+			if ($this.val() === prevVal) return;
+
+			if (!$this.val()) {
+				$project.attr('disabled', true);
+			} else {
+				$project.attr('disabled', false);
+				$project.val('').parent().removeClass('is-filled');
+
+				combo({
+					queryString: '#project-list-import',
+					isAsync: true,
+					codeTableUrl: '../codetable.php?table=project&subject=' + $this.attr('data-id')
+				});
+			}
+		}, 200)
+	});
+
 	$('#addProject').submit((e) => {
 		e.preventDefault();
 		const $this = $('#addProject');
@@ -21,7 +50,6 @@ $(document).ready(() => {
 			url: 'add-project.php',
 			data: data,
 			success: function (data) {
-				console.log(data);
 				location.href = location.protocol + '//' + location.host + location.pathname + '?type=success&form=addProject&message=' + encodeURI('Operacia uspesna!');
 			},
 			error: function (error) {
