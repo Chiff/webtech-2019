@@ -56,7 +56,7 @@ class UserImporter extends CsvImporter {
             $conn->query($query);
 
             if ($conn->error)
-                $this->message = "<div class='warning'>Chyba pri vkladani uzivatela do DB. Error: $conn->error</div>" . $this->message;
+                $this->message = "<div class='warning'>Chyba pri vkladani uzivatela do DB. Warning: $conn->error</div>" . $this->message;
 
             // NAJDENIE TIMU
             $query = "SELECT id  FROM team WHERE project_id=$project and team_number=$team;";
@@ -68,7 +68,7 @@ class UserImporter extends CsvImporter {
                 $conn->query($query);
 
                 if ($conn->error)
-                    $this->message = "<div class='warning'>Chyba pri vytvarani timu. Error: $conn->error</div>" . $this->message;
+                    $this->message = "<div class='warning'>Chyba pri vytvarani timu. Warning: $conn->error</div>" . $this->message;
             }
 
             // PRIRADENIE DO TIMU

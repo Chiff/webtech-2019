@@ -13,6 +13,12 @@ $(document).ready(() => {
 		codeTableUrl: '../codetable.php?table=subject'
 	});
 
+	combo({
+		queryString: '#subject-list-import-results',
+		isAsync: true,
+		codeTableUrl: '../codetable.php?table=subject'
+	});
+
 	$('#subject-import').focusout(function () {
 		const $this = $(this);
 		const $project = $("#project-import");
@@ -49,7 +55,7 @@ $(document).ready(() => {
 		$.post({
 			url: 'add-project.php',
 			data: data,
-			success: function (data) {
+			success: function () {
 				location.href = location.protocol + '//' + location.host + location.pathname + '?type=success&form=addProject&message=' + encodeURI('Operacia uspesna!');
 			},
 			error: function (error) {
@@ -61,13 +67,20 @@ $(document).ready(() => {
 		return false;
 	});
 
-	$('#user-import').submit((e) => {
+	$('#user-import').submit(() => {
 		const $this = $('#user-import');
 
 		const $project = $this.find('#project-import');
 		$project.val($project.attr('data-id'));
 
 		const $subject = $this.find('#subject-import');
+		$subject.val($subject.attr('data-id'));
+	});
+
+	$('#result-import').submit(() => {
+		const $this = $('#result-import');
+
+		const $subject = $this.find('#subject-import-results');
 		$subject.val($subject.attr('data-id'));
 	});
 });

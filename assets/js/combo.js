@@ -17,7 +17,6 @@ class comboSettings {
  * const a = combo({queryString: '#worktime-list'});
  *
  * @param props: {queryString: Sting, itemList?: Array, isAsync?: boolean, codeTableUrl: String}
- * @returns {{init: init, async: async, settings: comboSettings, e: (jQuery.fn.init|jQuery|HTMLElement), register: clickRegister}}
  */
 export function combo(props) {
     const settings = new comboSettings(props);
@@ -100,11 +99,6 @@ export function combo(props) {
 
                 if (settings.isAsync) {
                     $(this).parent().parent().find('input').attr('data-id', $(this).attr('data-id'));
-
-                    if(settings.queryString === "#oh-list"){
-                        $("form#vysledok").find('input[name=id_oh]').attr('value', $(this).attr('data-id'));
-                        $("form#newDiscipline").find('input[name=id_oh]').attr('value', $(this).attr('data-id'));
-                    }
                 }
             })
         })
