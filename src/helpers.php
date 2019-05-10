@@ -1,6 +1,16 @@
 <?php
 require_once('../config/config.php');
 
+session_start();
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: ../public/login/index.php');
+} else if (isset($_POST['log_out'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: ../public/login/index.php");
+}
+
 if ($enableDebug) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
