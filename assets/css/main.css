@@ -3,6 +3,7 @@ input[type=file]:focus {
     outline: none;
 }
 
+.form-message,
 input[type=file] {
     width: 100%;
     padding: 12px 20px;
@@ -12,6 +13,16 @@ input[type=file] {
     border-radius: 4px;
     box-sizing: border-box;
     height: 41px;
+}
+
+.form-message.error {
+    height: initial;
+    border-color: indianred;
+}
+
+.form-message.success {
+    height: initial;
+    border-color: limegreen;
 }
 
 
@@ -25,3 +36,34 @@ input[type=file] {
 .import-log.errors-only .row-valid {
     display: none;
 }
+
+.combo-wrapper {
+    position: relative;
+}
+
+.combo-wrapper ul {
+    position: absolute;
+    z-index: 99;
+    background: white;
+    width: calc(100% - 33px);
+    margin: 0;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    list-style: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+}
+
+.combo-wrapper ul li {
+    cursor: pointer;
+    padding: 4px 20px;
+    display: block;
+}
+
+.combo-wrapper ul li:hover {
+    color: #4CAF50;
+}
+
