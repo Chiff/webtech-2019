@@ -1,5 +1,6 @@
 <?php
 require_once('csv-importer.php');
+require_once(dirname(__DIR__, 1) . '/helpers.php');
 
 class UserImporter extends CsvImporter {
     private $message = null;
@@ -27,32 +28,63 @@ class UserImporter extends CsvImporter {
 
     /**
      * @param $project integer
+     * @param $subject integer
      * @param $conn mysqli
      * @return bool
      */
-    function insert($project, $conn){
+    function insert($project, $conn): bool {
         if (!is_numeric($project)) {
             return false;
         }
 
         foreach ($this->data as $key => $row) {
-            $team = $row['tim'];
-            $teammate = $row['id'];
-// TODO
-//            $query = "SELECT id  FROM team WHERE project_id=$project and team_number=$team;";
-//            $result = $conn->query($query);
-//            $res = [];
-//
-//            if ($result->num_rows > 0) {
-//                while ($row = $result->fetch_assoc())
-//                    $res[] = $row;
-//
-//                echo json_encode($res);
-//            } else {
-//                $query = "INSERT INTO `team`(`project_id`, `captain_id`, `team_number`) VALUES ($project, $teammate, $team)";
-//                $result = $conn->query($query);
-//            }
+            $id = $conn->escape_string($row['ID']);
+            $name = $conn->escape_string($row['meno']);
 
+            $mail = $conn->escape_string($row['email']);
+            $login = explode("@", $mail)[0];
+
+            $pass = $conn->escape_string($row['heslo']);
+            if (!stringExists($pass))
+                $pass = null;
+            else $pass = password_hash($pass, PASSWORD_DEFAULT);
+
+            $team = $conn->escape_string($row['tim']);
+
+            // IMPORT UZIVATELOV - POKIAL USER EXISTUJE VYPISE SA WARNING HLASKA (USER SA NEUPDATUJE)
+            $query = "INSERT INTO `student`(`ais_id`, `email`, `login`, `password`, `name`) VALUES ($id, '$mail', '$login', '$pass', '$name')";
+            $conn->query($query);
+
+            if ($conn->error)
+                $this->message = "<div class='warning'>Chyba pri vkladani uzivatela do DB. Error: $conn->error</div><br>" . $this->message;
+
+            // NAJDENIE TIMU
+            $query = "SELECT id  FROM team WHERE project_id=$project and team_number=$team;";
+            $result = $conn->query($query);
+
+            // AK TIM NEEXISTUJE VYTVORI SA NOVY TIM A JEHO KAPITAN JE AKTUALNY UZIVATEL
+            if ($result->num_rows < 1) {
+                $query = "INSERT INTO `team` (`project_id`, `captain_id`, `team_number`) VALUES ($project, $id, $team)";
+                $conn->query($query);
+
+                if ($conn->error)
+                    $this->message = "<div class='warning'>Chyba pri vytvarani timu. Error: $conn->error</div><br>" . $this->message;
+            }
+
+            // PRIRADENIE DO TIMU
+            $query = "SELECT id  FROM team WHERE project_id=$project and team_number=$team;";
+            $result = $conn->query($query);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $teamID = $row['id'];
+
+                // PRIRADENIE DO TIMU
+                $query = "INSERT INTO `teammate`(`student_id`, `team_id`) VALUES ($id, $teamID)";
+                $conn->query($query);
+
+                if ($conn->error)
+                    $this->message = "<div class='warning'>Chyba pri priradeni uzivatela do timu. Error: $conn->error</div><br>" . $this->message;
+            }
         }
 
         $conn->close();

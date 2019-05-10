@@ -60,4 +60,14 @@ $(document).ready(() => {
 
 		return false;
 	});
+
+	$('#user-import').submit((e) => {
+		const $this = $('#user-import');
+
+		const $project = $this.find('#project-import');
+		$project.val($project.attr('data-id'));
+
+		const $subject = $this.find('#subject-import');
+		$subject.val($subject.attr('data-id'));
+	});
 });

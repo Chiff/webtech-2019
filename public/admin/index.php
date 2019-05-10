@@ -59,7 +59,7 @@ if (isset($_POST["users"]) && isset($_POST["project"]) && isset($_FILES["file"])
 </form>
 
 <h2>Import uzivatelov</h2>
-<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data" id="user-import">
     <div class="combo-wrapper async">
         <label for="subject-import" class="combo">Zadaj nazov predmetu</label>
         <input type="text" class="combo" id="subject-import" name="subject" required autocomplete="off">
