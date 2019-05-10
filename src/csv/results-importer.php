@@ -36,6 +36,8 @@ class ResultsImporter extends CsvImporter {
             return false;
         }
 
+        $subject = $conn->escape_string($subject);
+
         foreach ($this->data as $key => $row) {
             $id = $conn->escape_string($row['ID']);
             $meno = $conn->escape_string($row['meno']);
@@ -64,7 +66,10 @@ class ResultsImporter extends CsvImporter {
                 foreach ($row as $resultKey => $resultValue) {
                     if ($resultKey == 'ID' || $resultKey == 'meno') continue;
 
-                    $query .= "($SSID, '$resultKey', '$resultValue'),";
+                    $r1 = $conn->escape_string($resultKey);
+                    $r2 = $conn->escape_string($resultValue);
+
+                    $query .= "($SSID, '$r1', '$r2'),";
                 }
                 $query = substr($query, 0, -1);
                 $conn->query($query);
