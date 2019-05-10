@@ -5,7 +5,7 @@ if(isset($_SESSION["login_message"])){
 }
 
 if (isset($_SESSION['username'])) {
-    $_SESSION['msg'] = "You are log in already";
+    $_SESSION['msg'] = "You are log in already!";
     header('location: ../index.php');
 }
 ?>
