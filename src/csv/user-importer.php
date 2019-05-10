@@ -17,7 +17,7 @@ class UserImporter extends CsvImporter {
 
 
         if (isset($this->data) && $verbose && $this->isCsvValid()) {
-            $this->message = json_encode($this->data);
+            $this->message = "Validacia prebehla bez chyby!<br>" . $this->message;
         } else if ($verbose) {
             $this->message = "Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV" . $this->message;
             return false;
@@ -28,12 +28,12 @@ class UserImporter extends CsvImporter {
 
     /**
      * @param $project integer
-     * @param $subject integer
      * @param $conn mysqli
      * @return bool
      */
     function insert($project, $conn): bool {
         if (!is_numeric($project)) {
+            $this->message = "ID projektu nie je spravne. Upload sa rusi!<br>" . $this->message;
             return false;
         }
 
@@ -56,7 +56,7 @@ class UserImporter extends CsvImporter {
             $conn->query($query);
 
             if ($conn->error)
-                $this->message = "<div class='warning'>Chyba pri vkladani uzivatela do DB. Error: $conn->error</div><br>" . $this->message;
+                $this->message = "<div class='warning'>Chyba pri vkladani uzivatela do DB. Error: $conn->error</div>" . $this->message;
 
             // NAJDENIE TIMU
             $query = "SELECT id  FROM team WHERE project_id=$project and team_number=$team;";
@@ -68,7 +68,7 @@ class UserImporter extends CsvImporter {
                 $conn->query($query);
 
                 if ($conn->error)
-                    $this->message = "<div class='warning'>Chyba pri vytvarani timu. Error: $conn->error</div><br>" . $this->message;
+                    $this->message = "<div class='warning'>Chyba pri vytvarani timu. Error: $conn->error</div>" . $this->message;
             }
 
             // PRIRADENIE DO TIMU
@@ -78,16 +78,16 @@ class UserImporter extends CsvImporter {
                 $row = $result->fetch_assoc();
                 $teamID = $row['id'];
 
-                // PRIRADENIE DO TIMU
                 $query = "INSERT INTO `teammate`(`student_id`, `team_id`) VALUES ($id, $teamID)";
                 $conn->query($query);
 
                 if ($conn->error)
-                    $this->message = "<div class='warning'>Chyba pri priradeni uzivatela do timu. Error: $conn->error</div><br>" . $this->message;
+                    $this->message = "<div class='warning'>Chyba pri priradeni uzivatela do timu. Error: $conn->error</div>" . $this->message;
             }
         }
 
         $conn->close();
+        $this->message = "Update DB sa ukoncil uspesne! Chyby ktore nastali cez update su vypisane nizzsie.<br>" . $this->message;
         return true;
     }
 
