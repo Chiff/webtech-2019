@@ -22,6 +22,7 @@ if (isset($_POST['login_user'])) {
         $login_name_db = mysqli_query($db, "SELECT * FROM student WHERE login='$login_username'"); //Zmenit
         if (mysqli_num_rows($login_name_db) == 1) { //ak najde studenta
             $row = mysqli_fetch_row($login_name_db);
+            $_SESSION['uid'] =  $row[0];
             var_dump(password_verify($login_password, $row[3]));
             if (password_verify($login_password, $row[3])) { //Porovnanie hesiel
                 $_SESSION['username'] = $login_username;

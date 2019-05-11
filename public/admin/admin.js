@@ -4,19 +4,19 @@ $(document).ready(() => {
 	combo({
 		queryString: '#subject-list',
 		isAsync: true,
-		codeTableUrl: '../codetable.php?table=subject'
+		codeTableUrl: '../api/codetable.php?table=subject'
 	});
 
 	combo({
 		queryString: '#subject-list-import',
 		isAsync: true,
-		codeTableUrl: '../codetable.php?table=subject'
+		codeTableUrl: '../api/codetable.php?table=subject'
 	});
 
 	combo({
 		queryString: '#subject-list-import-results',
 		isAsync: true,
-		codeTableUrl: '../codetable.php?table=subject'
+		codeTableUrl: '../api/codetable.php?table=subject'
 	});
 
 	$('#subject-import').focusout(function () {
@@ -36,7 +36,7 @@ $(document).ready(() => {
 				combo({
 					queryString: '#project-list-import',
 					isAsync: true,
-					codeTableUrl: '../codetable.php?table=project&subject=' + $this.attr('data-id')
+					codeTableUrl: '../api/codetable.php?table=project&subject=' + $this.attr('data-id')
 				});
 			}
 		}, 200)

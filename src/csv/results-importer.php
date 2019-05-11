@@ -77,7 +77,6 @@ class ResultsImporter extends CsvImporter {
                 if ($conn->error)
                     $this->message = "<div class='warning'>Chyba pri priradeni vysldeku pre uzivatela. Warning: $conn->error</div>" . $this->message;
             }
-            echo "<hr>";
         }
 
         $conn->close();
