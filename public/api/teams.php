@@ -39,7 +39,7 @@ $ret = array();
 foreach ($temp as $item) {
     $team_id = $item['id'];
     $team_number = $item['team_number'];
-    $query = "SELECT * FROM teammate WHERE team_id=$team_id";
+    $query = "SELECT student_id, result, agree FROM teammate WHERE team_id=$team_id";
     $result = $conn->query($query);
 
     if ($conn->error) {
@@ -51,7 +51,7 @@ foreach ($temp as $item) {
     $x = $result->fetch_all(MYSQLI_ASSOC);
     foreach ($x as $teammate => $value) {
         $teammate_id = $value["student_id"];
-        $query = "SELECT ais_id, email, name FROM student WHERE ais_id=$teammate_id";
+        $query = "SELECT email, name FROM student WHERE ais_id=$teammate_id";
         $result = $conn->query($query);
 
         if ($conn->error) {
