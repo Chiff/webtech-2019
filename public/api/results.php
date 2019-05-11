@@ -33,7 +33,7 @@ $query = "SELECT st.ais_id, st.name, concat(su.label, ' - ',su.year) as subject,
           FROM student_subject as ss 
           JOIN student as st on st.ais_id = ss.student_id 
           JOIN subject as su on su.id = ss.subject_id $where";
-echo $query;
+
 $result = $conn->query($query);
 
 if ($conn->error) {
