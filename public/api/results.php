@@ -3,6 +3,11 @@ require_once('../../src/helpers.php');
 
 header('Content-type: application/json; charset=utf-8');
 
+if(!isset($_SESSION) || !isset($_SESSION["uid"])) {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
+
 $conn = new mysqli($hostname, $username, $password, $dbname);
 $conn->set_charset("utf8");
 
