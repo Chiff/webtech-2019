@@ -1,13 +1,12 @@
 <?php
-require "../../config/config.php";
-require "MailSender.php";
+//require_once "../helpers.php";
+require_once "MailSender.php";
 
 $csv_array = [];
 
 $server_csv = "server_info.csv";
 $sender = "xbencot@stuba.sk";
 $sender_pass = "FEIstuba2018";
-$sender_name = "Tomas";
 
 // user data
 $number_of_people = 0;
@@ -50,11 +49,10 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 $sql = "SELECT * FROM sablona";
 
-if ($html)
+if ($html) {
+    $result = $conn->query($sql);
+
     for ($i = 0; $i < $number_of_people; $i++) {
-
-        $result = $conn->query($sql);
-
         if ($result->num_rows > 0) {
             // output data of each row
             $message = "";
@@ -67,7 +65,6 @@ if ($html)
                     $row["http"] . $csv_array[$i][5] . ":" . $csv_array[$i][8] . "<br><br>" .
                     $row["pozdrav"] . "<br><br>" . $sender;
             }
-
 
             if (isset($_FILES['attachment'])) {
 
@@ -93,15 +90,14 @@ if ($html)
         } else {
             echo "0 results";
         }
-
     }
-else
+} else {
+    $result = $conn->query($sql);
+
     for ($i = 0; $i < $number_of_people; $i++) {
 
-        $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            // output data of each row
             $message = "";
             while ($row = $result->fetch_assoc()) {
                 $message = $row["oslovenie"] . "\n\n" .
@@ -112,9 +108,8 @@ else
                     $row["http"] . $csv_array[$i][5] . ":" . $csv_array[$i][8] . "\n\n" .
                     $row["pozdrav"] . "\n\n" . $sender;
             }
-            var_dump($_FILES['attachment']);
+
             if (isset($_FILES['attachment'])) {
-                //Get uploaded file data using $_FILES array
                 $tmp_name = $_FILES['attachment']['tmp_name']; // get the temporary file name of the file on the server
                 $name = $_FILES['attachment']['name'];  // get the name of the file
                 $size = $_FILES['attachment']['size'];  // get size of the file for size validation
@@ -136,5 +131,6 @@ else
             echo "0 results";
         }
     }
+}
 
 $conn->close();

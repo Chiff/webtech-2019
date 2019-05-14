@@ -20,7 +20,7 @@ class MailSender
             $this->mail->SMTPAuth = true;
             $this->mail->SMTPSecure = 'tls';
             $this->mail->Host = "mail.stuba.sk";
-            $this->mail->Port = 587; // or 587
+            $this->mail->Port = 587;
             $this->mail->Username = $sender;
             $this->mail->Password = $sender_pass;
             $this->mail->SetFrom($sender);
@@ -75,8 +75,6 @@ class MailSender
      * @param $message
      * @param $path
      * @param $name
-     * @param $encoding
-     * @param $type
      * @return bool
      */
     function send_attachment($to, $subject, $message, $path, $name)
@@ -101,8 +99,6 @@ class MailSender
      * @param $message
      * @param $path
      * @param $name
-     * @param $encoding
-     * @param $type
      * @return bool
      */
     function sendHTML_attachment($to, $subject, $message, $path, $name)
