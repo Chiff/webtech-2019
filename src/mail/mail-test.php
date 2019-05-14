@@ -6,11 +6,8 @@
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
     <title>Zaver</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/main.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/text_editor/main.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/text_editor/info.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/text_editor/widgContent.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/text_editor/widgEditor.css">
-    <script src="../../assets/js/text_editor/widgEditor.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/widgEditor.css">
+    <script src="../../assets/js/widgEditor.js"></script>
 </head>
 <body>
 <div class="mainContainer">
@@ -118,6 +115,8 @@
             // VELKY CSV
 
             $sender = "Janko Mrkvicka";
+            if (isset($_SESSION["username"]))
+                $sender = $_SESSION["username"];
 
             $fp = fopen($server_csv, 'w');
 
@@ -151,6 +150,34 @@
 
             echo "</table>";
 
+            require_once "../../config/config.php";
+
+            // Create connection
+            $conn = new mysqli($hostname, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            $conn->set_charset("utf8");
+            $sql = "SELECT * FROM sablona";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // output data of each row
+                $message = [];
+                while ($row = $result->fetch_assoc()) {
+                    $message[] = $row["oslovenie"] . "<br><br>" .
+                        $row["uvod"] . "<br><br>" .
+                        $row["verejnaIP"] . " ((ip))<br>" .
+                        $row["login"] . " ((login))<br>" .
+                        $row["heslo"] . " ((heslo))<br><br>" .
+                        $row["http"] . "((url)):((port))<br><br>" .
+                        $row["pozdrav"] . "<br><br>" . $sender;
+                }
+            } else {
+                echo "0 results";
+            }
 
             ?>
             <div>
@@ -175,29 +202,20 @@
                         <input type="file" name="attachment">
                     </label>
                     <br>
+                    <fieldset>
+                        <label for="noise">
+                            Email text:
+                        </label>
+                        <textarea id="noise" name="noise" class="widgEditor nothing"><?php echo $message[0];?></textarea>
+                    </fieldset>
                     <input type="hidden" name="rows" value="<?php echo $number_of_people ?>">
                     <input type="hidden" name="delimiter" value="<?php echo $_POST['delimiter']; ?>">
                     <input type="submit" value="submit">
                 </form>
             </div>
 
-            <div>
-                <form action="submit.php"
-                      onsubmit="alert('Your submitted HTML was:\n\n' + document.getElementById('noise').value); return false;">
-                    <fieldset>
-                        <label for="noise">
-                            Make some noise:
-                        </label>
-                        <textarea id="noise" name="noise" class="widgEditor nothing">&lt;p&gt;widgEditor &lt;strong&gt;automatically&lt;/strong&gt; integrates the content that was in the textarea!&lt;/p&gt;</textarea>
-                    </fieldset>
-                    <fieldset class="submit">
-                        <input type="submit" value="Check the submitted code"/>
-                    </fieldset>
-                </form>
-            </div>
             <?php
 
-            $conn->close();
 
             fclose($fp);
 
