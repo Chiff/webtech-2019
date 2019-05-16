@@ -16,8 +16,10 @@
     <form action='<?php echo $_SERVER["PHP_SELF"]; ?>' method='post' enctype="multipart/form-data">
         Import File : <input type='file' name='sel_file' size='20'>
         <br>
-        Delimiter
-        <input type="text" name="delimiter" value=";" required>
+        <label>
+            Delimiter:
+            <input type="text" name="delimiter" value=";" required>
+        </label>
         <input type='submit' name='submit' value='submit'>
     </form>
 
@@ -36,7 +38,7 @@
         return $result;
     }
 
-    $server_csv = "server_info.csv";
+    $server_csv = "../../uploaded/server_info.csv";
 
     $verejnaIP = "147.175.121.210";
     $privatnaIP = "192.168.0.";
@@ -63,7 +65,7 @@
             $handle = fopen($filename, "r");
 
             // DOWNLOAD CSV
-            $download_file = "download.csv";
+            $download_file = "../../uploaded/download.csv";
             $fp = fopen($download_file, 'w');
             $header = array("ID", "meno", "email", "login", "heslo");
             fputcsv($fp, $header, $_POST['delimiter']);
@@ -108,9 +110,8 @@
 
             fclose($fp);
 
-            echo "<a style='color: #ff0000;' href=\"download.csv\">Download CSV file</a>";
+            echo "<a style='color: #ff0000;' href=\"../../uploaded/download.csv\">Download CSV file</a>" . "<br>";
 
-            //downloadCsv($csv_array);
 
             // VELKY CSV
 
@@ -150,7 +151,7 @@
 
             echo "</table>";
 
-            require_once "../../config/config.php";
+            require "../../config/config.php";
 
             // Create connection
             $conn = new mysqli($hostname, $username, $password, $dbname);
@@ -180,13 +181,11 @@
             }
 
             ?>
+            <br>
             <div>
-                <form method="post" action="send-mail.php">
-                    <label>
-                        Subject:
-                        <input type="text" name="subject">
-                    </label>
-                    <br>
+                <form method="post" action="send-mail.php" name="myForm">
+                    <input type="hidden" name="rows" value="<?php echo $number_of_people ?>">
+                    <input type="hidden" name="delimiter" value="<?php echo $_POST['delimiter']; ?>">
                     <label>
                         mail:
                         <input type="email" name="sender_email">
@@ -198,22 +197,45 @@
                     </label>
                     <br>
                     <label>
+                        Subject:
+                        <input type="text" name="subject">
+                    </label>
+                    <br>
+                    <label>
                         file:
                         <input type="file" name="attachment">
                     </label>
                     <br>
-                    <fieldset>
+                    <label>Plain
+                        <input type="radio" name="html" value="0"/>
+                    </label> <br>
+                    <label>HTML
+                        <input type="radio" name="html" value="1"/>
+                    </label> <br>
+                    <br>
+                    <div id="myDIV" style="display: none;">
                         <label for="noise">
                             Email text:
                         </label>
-                        <textarea id="noise" name="noise" class="widgEditor nothing"><?php echo $message[0];?></textarea>
-                    </fieldset>
-                    <input type="hidden" name="rows" value="<?php echo $number_of_people ?>">
-                    <input type="hidden" name="delimiter" value="<?php echo $_POST['delimiter']; ?>">
+                        <textarea id="noise" name="noise"
+                                  class="widgEditor nothing"><?php echo $message[0]; ?></textarea>
+                    </div>
+
                     <input type="submit" value="submit">
                 </form>
             </div>
-
+            <script>
+                let rad = document.myForm.html;
+                for (let i = 0; i < rad.length; i++) {
+                    rad[i].addEventListener('change', function () {
+                        if (this.value === '1') {
+                            document.getElementById("myDIV").style.display = "block";
+                        } else {
+                            document.getElementById("myDIV").style.display = "none";
+                        }
+                    });
+                }
+            </script>
             <?php
 
 

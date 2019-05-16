@@ -1,31 +1,41 @@
 <?php
 //require_once "../helpers.php";
-require_once "MailSender.php";
+require_once "../../src/mail/MailSender.php";
+require_once "../../config/config.php";
 
 $csv_array = [];
 
-$server_csv = "server_info.csv";
-$sender = "xbencot@stuba.sk";
-$sender_pass = "FEIstuba2018";
+$server_csv = "../../uploaded/server_info.csv";
+$sender = "";
+$sender_pass = "";
 
 // user data
 $number_of_people = 0;
-if (isset($_POST['rows']))
-    $number_of_people = $_POST['rows'];
+
 $delimiter = ";";
 if (isset($_POST['delimiter']))
     $delimiter = $_POST['delimiter'];
-$data = array_map('str_getcsv', file($server_csv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
-for ($i = 0; $i < count($data); $i++) {
-    if ($i == 0)
-        continue;
-    $csv_array[] = explode($delimiter, $data[$i][0]);
+echo "delim: ", $delimiter, "<br>";
+
+$row = 0;
+if (($handle = fopen($server_csv, "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+        if ($row == 0) {
+            $row++;
+            continue;
+        }
+        $csv_array[] = $data;
+        $number_of_people++;
+    }
+    fclose($handle);
 }
+
 
 // mail data
 $subject = "";
 if (isset($_POST['subject']))
     $subject = $_POST["subject"]; //subject for the email
+echo "sub: ", $subject, "<br>";
 
 if (isset($_POST['sender_pass']))
     $sender_pass = $_POST['sender_pass'];
@@ -37,6 +47,9 @@ if (isset($_POST['sender_email']))
 $html = false;
 if (isset($_POST['html']))
     $html = $_POST['html'];
+echo "html: ";
+var_dump($html);
+echo "<br>";
 
 $mail = new MailSender($sender, $sender_pass);
 
@@ -49,46 +62,36 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 $sql = "SELECT * FROM sablona";
 
-if ($html) {
+if ($html === "1") {
     $result = $conn->query($sql);
-
     for ($i = 0; $i < $number_of_people; $i++) {
-        if ($result->num_rows > 0) {
-            // output data of each row
-            $message = "";
-            while ($row = $result->fetch_assoc()) {
-                $message = $row["oslovenie"] . "<br><br>" .
-                    $row["uvod"] . "<br><br>" .
-                    $row["verejnaIP"] . " " . $csv_array[$i][5] . "<br>" .
-                    $row["login"] . " " . $csv_array[$i][3] . "<br>" .
-                    $row["heslo"] . " " . $csv_array[$i][4] . "<br><br>" .
-                    $row["http"] . $csv_array[$i][5] . ":" . $csv_array[$i][8] . "<br><br>" .
-                    $row["pozdrav"] . "<br><br>" . $sender;
+
+        // output data of each row
+        $message = "";
+        if (isset($_POST['noise']))
+            $message = $_POST['noise'];
+
+        if (isset($_FILES['attachment'])) {
+
+            //Get uploaded file data using $_FILES array
+            $tmp_name = $_FILES['attachment']['tmp_name']; // get the temporary file name of the file on the server
+            $name = $_FILES['attachment']['name'];  // get the name of the file
+            $size = $_FILES['attachment']['size'];  // get size of the file for size validation
+            $error = $_FILES['attachment']['error']; // get the error (if any)
+
+            //validate form field for attaching the file
+            if ($error > 0) {
+                die('Upload error or No files uploaded');
             }
-
-            if (isset($_FILES['attachment'])) {
-
-                //Get uploaded file data using $_FILES array
-                $tmp_name = $_FILES['attachment']['tmp_name']; // get the temporary file name of the file on the server
-                $name = $_FILES['attachment']['name'];  // get the name of the file
-                $size = $_FILES['attachment']['size'];  // get size of the file for size validation
-                $error = $_FILES['attachment']['error']; // get the error (if any)
-
-                //validate form field for attaching the file
-                if ($error > 0) {
-                    die('Upload error or No files uploaded');
-                }
-                if ($size >= 10000000) { // 10MB
-                    die('Upload error or No files uploaded');
-                }
-
-                $mail->sendHTML_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
-            } else {
-                //$mail->send($csv_array[$i][2],$subject,$message);
-                $mail->sendHTML("t.benco@gmail.com", $subject, $message);
+            if ($size >= 10000000) { // 10MB
+                die('Upload error or No files uploaded');
             }
+            echo "mail attch html num: ", $i;
+            $mail->sendHTML_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
         } else {
-            echo "0 results";
+            $mail->sendHTML($csv_array[$i][2], $subject, $message);
+            $mail->sendHTML("t.benco@gmail.com", $subject, $message);
+            echo "mail html num: ", $i;
         }
     }
 } else {
@@ -121,10 +124,12 @@ if ($html) {
                     die('Upload error or No files uploaded');
                 }
 
-                //$mail->send_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
-                $mail->send_attachment("t.benco@gmail.com", $subject, $message, $tmp_name, $name);
+                echo "mail attch num: ", $i;
+
+                $mail->send_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
             } else {
-                //$mail->send($csv_array[$i][2],$subject,$message);
+                echo "mail num: ", $i;
+                $mail->send($csv_array[$i][2], $subject, $message);
                 $mail->send("t.benco@gmail.com", $subject, $message);
             }
         } else {
@@ -134,3 +139,4 @@ if ($html) {
 }
 
 $conn->close();
+//header("location: server-data-generator.php");
