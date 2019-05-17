@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-    <title>Zaver</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/main.css">
+    <title>Generovanie prihlasovacích údajov</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/widgEditor.css">
     <script src="../../assets/js/widgEditor.js"></script>
+    <?php include('../head.php'); ?>
 </head>
 <body>
+<?php include('../nav.php'); ?>
+
 <div class="mainContainer">
 
     <h1>Import CSV file</h1>
@@ -24,6 +26,32 @@
     </form>
 
     <?php
+
+    /**
+     * @param $vals array
+     * @param $innerHTMLs array
+     * @param $selected string
+     */
+    function genOptions($vals, $innerHTMLs, $selected)
+    {
+        if ($vals == null) {
+            for ($i = 0; $i < count($innerHTMLs); $i++) {
+                if ($selected === $i) {
+                    echo "<option value='$i' selected='selected'>$innerHTMLs[$i]</option>";
+                } else {
+                    echo "<option value='$i'>$innerHTMLs[$i]</option>";
+                }
+            }
+        } else if (count($vals) == count($innerHTMLs)) {
+            for ($i = 0; $i < count($innerHTMLs); $i++) {
+                if ($selected === $vals[$i]) {
+                    echo "<option value='$vals[$i]' selected='selected'>$innerHTMLs[$i]</option>";
+                } else {
+                    echo "<option value='$vals[$i]'>$innerHTMLs[$i]</option>";
+                }
+            }
+        }
+    }
 
     function generatePassword($length = 15)
     {
@@ -164,11 +192,15 @@
 
             $result = $conn->query($sql);
 
+            $message_ids = [];
+            $message_vals = [];
             if ($result->num_rows > 0) {
                 // output data of each row
                 $message = [];
                 while ($row = $result->fetch_assoc()) {
-                    $message[] = $row["oslovenie"] . "<br><br>" .
+                    $message_ids[] = $row["id"];
+                    $message_vals[] = "Sablona " . $row["id"];
+                    $message[$row["id"]] = $row["oslovenie"] . "<br><br>" .
                         $row["uvod"] . "<br><br>" .
                         $row["verejnaIP"] . " ((ip))<br>" .
                         $row["login"] . " ((login))<br>" .
@@ -183,56 +215,89 @@
             ?>
             <br>
             <div>
-                <form method="post" action="send-mail.php" name="myForm">
+                <form method="post" action="../../src/mail/send-mail.php" name="myForm">
                     <input type="hidden" name="rows" value="<?php echo $number_of_people ?>">
                     <input type="hidden" name="delimiter" value="<?php echo $_POST['delimiter']; ?>">
+
                     <label>
-                        mail:
-                        <input type="email" name="sender_email">
+                        Email:
+                        <input type="email" name="sender_email" required>
                     </label>
                     <br>
                     <label>
-                        pass:
-                        <input type="password" name="sender_pass">
+                        Heslo:
+                        <input type="password" name="sender_pass" required>
                     </label>
                     <br>
                     <label>
-                        Subject:
+                        Predmet:
                         <input type="text" name="subject">
                     </label>
                     <br>
                     <label>
-                        file:
+                        Subor:
                         <input type="file" name="attachment">
                     </label>
                     <br>
-                    <label>Plain
-                        <input type="radio" name="html" value="0"/>
-                    </label> <br>
-                    <label>HTML
-                        <input type="radio" name="html" value="1"/>
-                    </label> <br>
+                    <label for="template_select">Sablona:</label>
+                    <select name="template_select" id="template_select" onchange="updateTemplate()">
+                        <?php genOptions($message_ids, $message_vals, $_POST["template_id"]); ?>
+                    </select>
                     <br>
-                    <div id="myDIV" style="display: none;">
+                    <label for="editTemplate">Editacia sablony</label>
+                    <input type="checkbox" id="editTemplate" name="html" onclick="edit()"/>
+
+                    <br>
+                    <br>
+                    <div id="editedText" style="display: none;">
                         <label for="noise">
                             Email text:
                         </label>
-                        <textarea id="noise" name="noise"
-                                  class="widgEditor nothing"><?php echo $message[0]; ?></textarea>
+                        <textarea id="noise" name="noise" class="widgEditor nothing">
+                            <?php
+                            if (isset($_POST["template_id"]))
+                                echo $message[$_POST["template_id"]];
+                            else
+                                echo $message[$message_ids[0]]; ?>
+                        </textarea>
                     </div>
 
                     <input type="submit" value="submit">
                 </form>
             </div>
+            <!-- jQuery-->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script>
-                let rad = document.myForm.html;
-                for (let i = 0; i < rad.length; i++) {
-                    rad[i].addEventListener('change', function () {
-                        if (this.value === '1') {
-                            document.getElementById("myDIV").style.display = "block";
-                        } else {
-                            document.getElementById("myDIV").style.display = "none";
+                function edit() {
+                    // Get the checkbox
+                    const checkBox = document.getElementById("editTemplate");
+                    // Get the output text
+                    const text = document.getElementById("editedText");
+
+                    // If the checkbox is checked, display the output text
+                    if (checkBox.checked == true) {
+                        text.style.display = "block";
+                    } else {
+                        text.style.display = "none";
+                    }
+                }
+
+                function updateTemplate() {
+                    const x = document.getElementById("template_select").value;
+                    console.log("You selected: " + x);
+
+                    $.ajax({    //create an ajax request to display.php
+                        type: "GET",
+                        url: "../../src/mail/updateTemplate.php",
+                        async: false,
+                        data: {
+                            template: x
+                        },
+                        dataType: "html",   //expect html to be returned
+                        success: function (response) {
+                            $('#noiseWidgIframe').contents().find('html').html(response)
                         }
+
                     });
                 }
             </script>
