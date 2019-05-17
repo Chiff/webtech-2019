@@ -115,7 +115,7 @@
 
             // VELKY CSV
 
-            $sender = "Janko Mrkvicka";
+            $sender = "((sender))";
             if (isset($_SESSION["username"]))
                 $sender = $_SESSION["username"];
 
