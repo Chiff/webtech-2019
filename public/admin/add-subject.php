@@ -12,7 +12,7 @@ if (isset($_POST['addSub'])) {
         $subject = $conn->escape_string($_POST['subject']);
 
         if (preg_match("/^20[0-9]{2}\/20[0-9]{2}$/U", $year) == false) {
-            header("Location: index.php?form=addSub&type=error&message=" . urlencode('Zadany format roku je nespravny'));
+            header("Location: index.php?form=addSub&type=alert-danger&message=" . urlencode('Zadany format roku je nespravny'));
             return;
         }
 
@@ -20,13 +20,13 @@ if (isset($_POST['addSub'])) {
         $result = $conn->query($query);
 
         if (!$result) {
-            header("Location: index.php?form=addSub&type=error&message=" . urlencode($conn->error));
+            header("Location: index.php?form=addSub&type=alert-danger&message=" . urlencode($conn->error));
             return;
         }
 
         $conn->close();
 
-        header("Location: index.php?form=addSub&type=success&message=" . urlencode('Operacia uspesna!'));
+        header("Location: index.php?form=addSub&type=alert-success&message=" . urlencode('Operacia uspesna!'));
         return;
     }
 }

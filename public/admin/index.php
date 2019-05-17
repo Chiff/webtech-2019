@@ -32,7 +32,7 @@ if (isset($_POST["users"]) && isset($_POST["project"]) && isset($_FILES["file"])
 <body>
 <?php include('../nav.php'); ?>
 
-<h2>Vytovernie noveho predmetu</h2>
+<h2><span data-translate>Vytvorenie noveho</span> <span data-translate>predmetu</span></h2>
 <form action="add-subject.php" method="post" id="addSub">
     <label>
         Zadaj rocnik vo formate <code>20xx/20xx</code>
@@ -49,7 +49,7 @@ if (isset($_POST["users"]) && isset($_POST["project"]) && isset($_FILES["file"])
     ?>
 </form>
 
-<h2>Vytovernie noveho projektu</h2>
+<h2><span data-translate>Vytvorenie noveho</span> <span data-translate>projektu</span></h2>
 <form action="add-project.php" method="post" id="addProject">
     <div class="combo-wrapper async">
         <label for="subject" class="combo">Zadaj nazov predmetu</label>
@@ -91,7 +91,7 @@ if (isset($_POST["users"]) && isset($_POST["project"]) && isset($_FILES["file"])
     </label>
     <label>
         Delimiter
-        <input type="text" name="delimiter" value=";" required>
+        <input type="text" name="delimiter" value=";" maxlength="1" minlength="1" required>
     </label>
     <input type="submit" name="users"/>
 </form>

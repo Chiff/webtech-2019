@@ -20,7 +20,7 @@ if (isset($_POST['addProject'])) {
 
         $response = [];
         $response["form"] = 'addProject';
-        $response["type"] = 'success';
+        $response["type"] = 'alert-success';
         $response["message"] = 'Operacia uspesna!';
         echo json_encode($response);
         return;

@@ -56,11 +56,11 @@ $(document).ready(() => {
 			url: 'add-project.php',
 			data: data,
 			success: function () {
-				location.href = location.protocol + '//' + location.host + location.pathname + '?type=success&form=addProject&message=' + encodeURI('Operacia uspesna!');
+				location.href = location.protocol + '//' + location.host + location.pathname + '?type=alert-success&form=addProject&message=' + encodeURI('Operacia uspesna!');
 			},
 			error: function (error) {
 				const response = JSON.parse(error.responseText);
-				location.href = location.protocol + '//' + location.host + location.pathname + '?type=error&form=addProject&message=' + encodeURI(response.error.detail);
+				location.href = location.protocol + '//' + location.host + location.pathname + '?type=alert-danger&form=addProject&message=' + encodeURI(response.error.detail);
 			}
 		});
 

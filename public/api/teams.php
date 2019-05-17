@@ -48,8 +48,8 @@ foreach ($temp as $item) {
     }
 
     $item["teammates"] = array();
-    $x = $result->fetch_all(MYSQLI_ASSOC);
-    foreach ($x as $teammate => $value) {
+    $teammates = $result->fetch_all(MYSQLI_ASSOC);
+    foreach ($teammates as $teammate => $value) {
         $teammate_id = $value["student_id"];
         $query = "SELECT email, name FROM student WHERE ais_id=$teammate_id";
         $result = $conn->query($query);
