@@ -91,7 +91,7 @@ if (isset($_POST["users"]) && isset($_POST["project"]) && isset($_FILES["file"])
     </label>
     <label>
         Delimiter
-        <input type="text" name="delimiter" value=";" required>
+        <input type="text" name="delimiter" value=";" maxlength="1" minlength="1" required>
     </label>
     <input type="submit" name="users"/>
 </form>
