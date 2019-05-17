@@ -1,6 +1,5 @@
 <?php
-
-require "../../config/config.php";
+require_once('../../src/helpers.php');
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $dbname);

@@ -1,3 +1,6 @@
+<?php
+require_once('../../src/helpers.php');
+?>
 <!DOCTYPE html>
 <html lang="sk">
 <head>
@@ -178,8 +181,6 @@
             }
 
             echo "</table>";
-
-            require "../../config/config.php";
 
             // Create connection
             $conn = new mysqli($hostname, $username, $password, $dbname);
