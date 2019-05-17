@@ -4,6 +4,8 @@ require_once "../../src/mail/MailSender.php";
 require_once "../../config/config.php";
 
 $csv_array = [];
+$mail_sql = "INSERT INTO `mail_statistics`(`student_name`, `subject`, `template_id`) VALUES (?,?,?)";
+
 
 $server_csv = "../../uploaded/server_info.csv";
 $sender = "Feri";
@@ -94,6 +96,8 @@ if ($html === "1") {
                 die('Upload error or No files uploaded');
             }
             echo "mail attch html num: ", $i, "<br>";
+            $stmt = $conn->prepare($mail_sql);
+            $stmt->bind_param();
             $mail->sendHTML_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
         } else {
             $mail->sendHTML($csv_array[$i][2], $subject, $message);
@@ -154,4 +158,4 @@ if ($html === "1") {
 }
 
 $conn->close();
-header("location: server-data-generator.php");
+header("location: ../../public/admin/server-data-generator.php");
