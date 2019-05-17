@@ -45,16 +45,11 @@ input[type=file] {
     position: absolute;
     z-index: 99;
     background: white;
-    width: calc(100% - 33px);
-    margin: 0;
-    padding: 15px;
+    width: 100%;
+    padding: 1em;
+    margin-top: 1em;
     max-height: 300px;
     overflow-y: auto;
-    list-style: none;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 2px solid #4CAF50;
 }
 
 .combo-wrapper ul li {
@@ -64,6 +59,58 @@ input[type=file] {
 }
 
 .combo-wrapper ul li:hover {
-    color: #4CAF50;
+    color: #17a2b8;
 }
 
+.color-secondary {
+    color: #17a2b8; !important;
+}
+
+.page-wrapper {
+    padding: 1em;
+}
+
+body {
+    padding: 1em;
+    background-color: #f5f5f5;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+.form-signin .checkbox {
+    font-weight: 400;
+}
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+@media all and (max-width: 450px){
+    .form-group.with-file {
+        flex-wrap: wrap;
+    }
+    .form-group.with-file  .custom-file{
+        flex-basis: 100%;
+        margin-top: 0.5em;
+    }
+}

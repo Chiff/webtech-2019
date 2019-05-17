@@ -16,9 +16,9 @@ class ResultsImporter extends CsvImporter {
 
 
         if (isset($this->data) && $verbose && $this->isCsvValid()) {
-            $this->message = "Validacia prebehla bez chyby!<br>" . $this->message;
+            $this->message = "<div class='alert alert-success'>Validacia prebehla bez chyby!</div>" . $this->message;
         } else if ($verbose) {
-            $this->message = "Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV" . $this->message;
+            $this->message = "<div class='alert alert-danger'>Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV</div>" . $this->message;
             return false;
         }
 
@@ -32,11 +32,14 @@ class ResultsImporter extends CsvImporter {
      */
     function insert($subject, $conn): bool {
         if (!is_numeric($subject)) {
-            $this->message = "ID projektu nie je spravne. Upload sa rusi!<br>" . $this->message;
+            $this->message = "<div class='alert alert-danger'>ID projektu nie je spravne. Upload sa rusi!</div>" . $this->message;
             return false;
         }
 
         $subject = $conn->escape_string($subject);
+
+        $insertWarnings = "<div class='alert alert-warning'><h4 class='alert-heading'>Chybne riadky pri validacii</h4><hr>";
+        $hasWarnings = false;
 
         foreach ($this->data as $key => $row) {
             $id = $conn->escape_string($row['ID']);
@@ -51,8 +54,10 @@ class ResultsImporter extends CsvImporter {
                 $query = "INSERT INTO `student_subject`(`student_id`, `subject_id`) VALUES ($id, $subject)";
                 $conn->query($query);
 
-                if ($conn->error)
-                    $this->message = "<div class='warning'>Chyba pri vytvarani student_subject. Warning: $conn->error</div>" . $this->message;
+                if ($conn->error){
+	                $insertWarnings .= "<p class='mb-0'>Chyba pri vytvarani student_subject: $conn->error</p>";
+	                $hasWarnings = true;
+                }
             }
 
             // PRIRADENIE DO RESULT CEZ STUDENT_SUBJECT
@@ -74,34 +79,36 @@ class ResultsImporter extends CsvImporter {
                 $query = substr($query, 0, -1);
                 $conn->query($query);
 
-                if ($conn->error)
-                    $this->message = "<div class='warning'>Chyba pri priradeni vysldeku pre uzivatela. Warning: $conn->error</div>" . $this->message;
+                if ($conn->error){
+	                $insertWarnings .= "<p class='mb-0'>Chyba pri priradeni vysldeku pre uzivatela: $conn->error</p>";
+	                $hasWarnings = true;
+                }
             }
         }
 
         $conn->close();
-        $this->message = "Update DB sa ukoncil uspesne! Chyby ktore nastali cez update su vypisane nizzsie.<br>" . $this->message;
+
+        if($hasWarnings)
+        	$this->message = $insertWarnings . "</div>" . $this->message;
+
+        $this->message = "<div class='alert alert-success'>Update DB sa ukoncil uspesne!</div>" . $this->message;
         return true;
     }
 
     function isCsvValid() {
         $valid = true;
 
-        $this->message = "<div class='import-log errors-only'>";
+        $invalidMessage = "<div class='alert alert-danger'><h4 class='alert-heading'>Chybne riadky pri validacii</h4><hr><p class='mb-0'>";
         foreach ($this->data as $key => $row) {
             if (stringExists($row['ID']) && stringExists($row['meno']) && isset($row['Znamka']) && isset($row['Spolu'])) {
-                $this->message .= "<div class='row-valid'><span style='color: lime'>ROW VALID </span><br>";
             } else {
-                $this->message .= "<div class='row-invalid'><span style='color: red'>ROW INVALID </span><br>";
+	            $invalidMessage .= "$key, ";
                 $valid = false;
             }
-
-            foreach ($row as $label => $value)
-                $this->message .= $label . " : " . $value . "<br>";
-
-            $this->message .= "</div>";
         }
-        $this->message .= "</div>";
+	    $invalidMessage .= "</p></div>";
+
+        if (!$valid) $this->message .= $invalidMessage;
 
         return $valid;
     }
