@@ -1,46 +1,23 @@
 <?php
-/**
- * @param $head array of head data
- * @param $rows array of row data
- * @param $ID string id
- * @param $TIDs array of thesis ids
- */
-function genTable($head, $rows, $ID)
-{
-    echo "<table id='$ID' class=\"table table-hover\"><thead><tr class='table-light'>";
-    foreach ($head as $item) {
-        genTableHeadRow($item);
-    }
-    echo "</tr></thead><tbody>";
-    for ($i = 0; $i < count($rows); $i++) {
-        genTableRow($rows[$i]);
-    }
-    echo "</tbody></table>";
-}
 
-/**
- * @param $row array
- * @param $tID string
- */
-function genTableRow($row)
-{
-    echo "<tr class='table-dark'>";
-    for ($i = 0; $i < count($row); $i++) {
-        echo "<td>$row[$i]</td>";
-    }
-    echo "</tr>";
-}
+require "../../config/config.php";
 
-/**
- * @param $row
- */
-function genTableHeadRow($row)
-{
-    echo "<tr class='table-light'>";
-    foreach ($row as $item) {
-        echo "<th scope=\"col\">$item</th>";
+// Create connection
+$conn = new mysqli($hostname, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$conn->set_charset("utf8");
+$sql = "SELECT * FROM `mail_statistics`";
+
+$result = $conn->query($sql);
+
+$data = [];
+if (0 < $result->num_rows) {
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
     }
-    echo "</tr>";
 }
 
 ?>
@@ -51,27 +28,47 @@ function genTableHeadRow($row)
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
         <title>Štatistiky odoslaných mailov</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/main.css">
+        <?php include('../head.php'); ?>
         <!-- data tables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
         <!-- jQuery UI -->
         <link rel="stylesheet"
               href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <!-- jQuery UI -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <!-- data tables-->
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
     </head>
     <body>
+    <?php include('../nav.php'); ?>
     <div class="mainContainer">
-        <?php
-
-        ?>
+        <table id="MailTable">
+            <caption><h3>Odoslané emaily</h3></caption>
+            <thead>
+            <tr>
+                <th>Študent</th>
+                <th>Dátum</th>
+                <th>Predmet</th>
+                <th>Šablóna</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($data as $row) {
+                echo "<tr>",
+                "<td>", $row["student_name"], "</td>",
+                "<td>", $row["date"], "</td>",
+                "<td>", $row["subject"], "</td>",
+                "<td>", $row["template_id"], "</td>",
+                "</tr>";
+            }
+            ?>
+            </tbody>
+        </table>
     </div>
-    <!-- jQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <!-- data tables-->
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script>
-        const table = $('#ResultTable').DataTable({
+        const table = $('#MailTable').DataTable({
             autoWidth: true,
             ordering: true,
             columnDefs: [{

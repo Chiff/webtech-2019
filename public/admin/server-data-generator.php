@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-    <title>Zaver</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/main.css">
+    <title>Generovanie prihlasovacích údajov</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/widgEditor.css">
     <script src="../../assets/js/widgEditor.js"></script>
+    <?php include('../head.php'); ?>
 </head>
 <body>
+<?php include('../nav.php'); ?>
+
 <div class="mainContainer">
 
     <h1>Import CSV file</h1>
@@ -294,7 +296,6 @@
                         dataType: "html",   //expect html to be returned
                         success: function (response) {
                             $('#noiseWidgIframe').contents().find('html').html(response)
-                            $('#template_hidden').attr('value', x);
                         }
 
                     });
