@@ -20,19 +20,13 @@ require_once('../src/helpers.php');
 </head>
 <body>
 <?php include('nav.php'); ?>
-<div id = "tmpDvv">
-    <!--netrebalo by if-->
-    <h1>Welcome <?php if (isset($_SESSION["username"])) echo $_SESSION["username"];  ?></h1>
-    <h2>Log in through <?php if (isset($_SESSION["login"])) echo $_SESSION["login"];  ?></h2>
-    <h3>uid = <?php echo $_SESSION["uid"]?></h3>
-    <h3>admin heslo = <?php echo $_SESSION["admin_password"]?></h3>
 
-    <span data-translate>Ahoj <span>neprekladaj</span> preloz</span>
+<div class="page-wrapper">
+	<h1>Welcome <?php if (isset($_SESSION["username"])) echo $_SESSION["username"];  ?></h1>
+	<h2>Log in through <?php if (isset($_SESSION["login"])) echo $_SESSION["login"];  ?></h2>
+	<h3>uid = <?php echo $_SESSION["uid"]?></h3>
+	<h3>admin heslo = <?php echo $_SESSION["admin_password"]?></h3>
 
-    <form action="index.php" method="post">
-        <button type="submit" name="log_out">
-            Odhlásiť sa
-        </button>
-    </form>
+	<span data-translate>Ahoj <span>neprekladaj</span> preloz</span>
 </div>
 </body>
