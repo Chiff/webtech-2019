@@ -9,3 +9,4 @@ $js =  $baseFolder . "/assets/js";
 <link rel='stylesheet' type='text/css' href='<?php echo $css?>/main.css'>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script src='<?php echo $js?>/main.js' type='module'></script>
+<script src='<?php echo $js?>/translate.js' type='module'></script>
