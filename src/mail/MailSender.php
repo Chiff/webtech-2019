@@ -118,6 +118,14 @@ class MailSender
     }
 
     /**
+     * @return string
+     */
+    function getError()
+    {
+        return $this->mail->ErrorInfo;
+    }
+
+    /**
      * @param $sender
      * @param $sender_pass
      */

@@ -8,7 +8,8 @@ $mail_sql = "INSERT INTO `mail_statistics`(`student_name`, `subject`, `template_
 
 
 $server_csv = "../../uploaded/server_info.csv";
-$sender = "Feri";
+$sender = "Feri@fei.sk";
+$sender_name = "Feri";
 $sender_pass = "";
 
 // user data
@@ -17,7 +18,6 @@ $number_of_people = 0;
 $delimiter = ";";
 if (isset($_POST['delimiter']))
     $delimiter = $_POST['delimiter'];
-echo "delim: ", $delimiter, "<br>";
 
 $row = 0;
 if (($handle = fopen($server_csv, "r")) !== FALSE) {
@@ -37,22 +37,18 @@ if (($handle = fopen($server_csv, "r")) !== FALSE) {
 $subject = "";
 if (isset($_POST['subject']))
     $subject = $_POST["subject"]; //subject for the email
-echo "sub: ", $subject, "<br>";
 
 if (isset($_POST['sender_pass']))
     $sender_pass = $_POST['sender_pass'];
 
 if (isset($_POST['sender_email'])) {
     $sender = $_POST['sender_email'];
-    $sender = explode("@", $sender)[0];
+    $sender_name = explode("@", $sender)[0];
 }
 // html editor bool
 $html = false;
 if (isset($_POST['html']))
     $html = $_POST['html'];
-echo "html: ";
-var_dump($html);
-echo "<br>";
 
 $mail = new MailSender($sender, $sender_pass);
 
@@ -63,9 +59,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $conn->set_charset("utf8");
-$sql = "SELECT * FROM sablona";
+$sql = "SELECT * FROM sablona where id = ?";
+$stmt = $conn->prepare($mail_sql);
 
-if ($html === "1") {
+
+if ($html !== false) {
+    echo "HTML<br>";
+
     $result = $conn->query($sql);
     for ($i = 0; $i < $number_of_people; $i++) {
 
@@ -78,7 +78,7 @@ if ($html === "1") {
         $message = str_replace("((login))", $csv_array[$i][3], $message);
         $message = str_replace("((url))", $csv_array[$i][4], $message);
         $message = str_replace("((port))", $csv_array[$i][5], $message);
-        $message = str_replace("((sender))", $sender, $message);
+        $message = str_replace("((sender))", $sender_name, $message);
 
         if (isset($_FILES['attachment'])) {
 
@@ -95,17 +95,31 @@ if ($html === "1") {
             if ($size >= 10000000) { // 10MB
                 die('Upload error or No files uploaded');
             }
-            echo "mail attch html num: ", $i, "<br>";
-            $stmt = $conn->prepare($mail_sql);
-            $stmt->bind_param();
-            $mail->sendHTML_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
+
+            if ($mail->sendHTML_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name)) {
+                $stmt->bind_param("sss", explode("@", $csv_array[$i][2])[0], $subject, $_POST['template_select']);
+                $stmt->execute();
+                header("location: ../../public/admin/server-data-generator.php");
+            } else {
+                echo $mail->getError();
+            }
         } else {
-            $mail->sendHTML($csv_array[$i][2], $subject, $message);
-            echo "mail html num: ", $i, "<br>";
+            if ($mail->sendHTML($csv_array[$i][2], $subject, $message)) {
+                $stmt->bind_param("sss", explode("@", $csv_array[$i][2])[0], $subject, $_POST['template_select']);
+                $stmt->execute();
+                header("location: ../../public/admin/server-data-generator.php");
+            } else {
+                echo $mail->getError();
+            }
         }
     }
 } else {
-    $result = $conn->query($sql);
+    echo "PLAIN<br>";
+
+    $template_stmt = $conn->prepare($sql);
+    $template_stmt->bind_param("s", $_POST['template_select']);
+    $template_stmt->execute();
+    $result = $template_stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
         $oslovenie = $row["oslovenie"] . "\n\n";
@@ -114,11 +128,10 @@ if ($html === "1") {
         $login = $row["login"] . " ";
         $heslo = $row["heslo"] . " ";
         $http = $row["http"];
-        $pozdrav = $row["pozdrav"] . "\n\n" . $sender;
+        $pozdrav = $row["pozdrav"] . "\n\n" . $sender_name;
     }
 
     for ($i = 0; $i < $number_of_people; $i++) {
-
 
         if ($result->num_rows > 0) {
             $message = $oslovenie . $uvod .
@@ -127,7 +140,6 @@ if ($html === "1") {
                 $heslo . $csv_array[$i][4] . "\n\n" .
                 $http . $csv_array[$i][5] . ":" . $csv_array[$i][8] . "\n\n" .
                 $pozdrav;
-
 
             if (isset($_FILES['attachment'])) {
                 $tmp_name = $_FILES['attachment']['tmp_name']; // get the temporary file name of the file on the server
@@ -144,18 +156,24 @@ if ($html === "1") {
                     die('Upload error or No files uploaded');
                 }
 
-                echo "mail attch num: ", $i, "<br>";
-
-                $mail->send_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name);
+                if ($mail->send_attachment($csv_array[$i][2], $subject, $message, $tmp_name, $name)) {
+                    $stmt->bind_param("sss", explode("@", $csv_array[$i][2])[0], $subject, $_POST['template_select']);
+                    $stmt->execute();
+                    header("location: ../../public/admin/server-data-generator.php");
+                } else {
+                    echo $mail->getError();
+                }
             } else {
-                echo "mail num: ", $i, "<br>";
-                $mail->send($csv_array[$i][2], $subject, $message);
+                if ($mail->send($csv_array[$i][2], $subject, $message)) {
+                    $stmt->bind_param("sss", explode("@", $csv_array[$i][2])[0], $subject, $_POST['template_select']);
+                    $stmt->execute();
+                    header("location: ../../public/admin/server-data-generator.php");
+                } else {
+                    echo $mail->getError();
+                }
             }
-        } else {
-            echo "0 results";
         }
     }
 }
 
 $conn->close();
-header("location: ../../public/admin/server-data-generator.php");

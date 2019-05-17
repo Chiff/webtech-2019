@@ -216,6 +216,7 @@
                 <form method="post" action="../../src/mail/send-mail.php" name="myForm">
                     <input type="hidden" name="rows" value="<?php echo $number_of_people ?>">
                     <input type="hidden" name="delimiter" value="<?php echo $_POST['delimiter']; ?>">
+
                     <label>
                         Email:
                         <input type="email" name="sender_email" required>
@@ -251,7 +252,11 @@
                             Email text:
                         </label>
                         <textarea id="noise" name="noise" class="widgEditor nothing">
-                            <?php if (isset($_POST["template_id"])) echo $message[$_POST["template_id"]]; else echo $message[$message_ids[0]]; ?>
+                            <?php
+                            if (isset($_POST["template_id"]))
+                                echo $message[$_POST["template_id"]];
+                            else
+                                echo $message[$message_ids[0]]; ?>
                         </textarea>
                     </div>
 
@@ -289,7 +294,7 @@
                         dataType: "html",   //expect html to be returned
                         success: function (response) {
                             $('#noiseWidgIframe').contents().find('html').html(response)
-                            //alert(response);
+                            $('#template_hidden').attr('value', x);
                         }
 
                     });
