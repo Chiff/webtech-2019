@@ -3,6 +3,7 @@ require_once('../../src/helpers.php');
 
 header('Content-type: application/json; charset=utf-8');
 
+
 if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
     writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
     return;
@@ -26,6 +27,17 @@ if (!is_numeric($project)) {
 }
 
 $query = "SELECT * FROM `team` WHERE project_id=$project";
+if (isset($_GET['team'])) {
+    $team = $_GET['team'];
+
+    if (!is_numeric($team)) {
+        writeError(400, 'Bad Request', "Team je v nespravnom tvare: $team");
+        return;
+    }
+
+    $query .= " AND id=$team";
+}
+
 $result = $conn->query($query);
 
 if ($conn->error) {
