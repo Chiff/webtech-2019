@@ -1,6 +1,11 @@
 <?php
 require_once('../../src/helpers.php');
 
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
+
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $dbname);
 // Check connection
@@ -17,11 +22,6 @@ if (0 < $result->num_rows) {
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
-}
-
-if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
-    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
-    return;
 }
 
 ?>

@@ -1,6 +1,11 @@
 <?php
 require_once('../../src/helpers.php');
 
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
+
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $dbname);
 // Check connection
@@ -18,19 +23,16 @@ if (0 < $result->num_rows) {
         $data[] = $row;
     }
 }
+$subject_rest = "../api/results.php?subject=";
+$project_rest = "../api/teams.php";
 
-if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
-    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
-    return;
-}
+$studenOK = 10;
+$studenNOK = 10;
+$studenNOPE = 10;
 
-$studenOK = 2;
-$studenNOK = 13;
-$studenNOPE = 34;
-
-$teamOK = 2;
-$teamNOK = 13;
-$teamNOPE = 34;
+$teamOK = 10;
+$teamNOK = 10;
+$teamNOPE = 10;
 
 ?>
     <!DOCTYPE html>
@@ -47,6 +49,10 @@ $teamNOPE = 34;
     <?php include('../nav.php'); ?>
     <br>
     <div class="mainContainer">
+        <br>
+
+        <button id="randomizeData" onclick="updateTeamData()">Randomize Data</button>
+
         <div class="row">
             <div class="col-6">
                 <h3>Študenti</h3>
@@ -55,23 +61,13 @@ $teamNOPE = 34;
                 <table id="studentTable" class="table">
                     <thead>
                     <tr>
-                        <th>Študent</th>
-                        <th>Dátum</th>
-                        <th>Predmet</th>
-                        <th>Šablóna</th>
+                        <th>Počet súhlasiacich študentov</th>
+                        <th>počet nesúhlasiacich študentov</th>
+                        <th>počet študentov, ktorí sa nevyjadrili</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($data as $row) {
-                        echo "<tr>",
-                        "<td>", $row["student_name"], "</td>",
-                        "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
-                        "<td>", $row["subject"], "</td>",
-                        "<td>", $row["template_id"], "</td>",
-                        "</tr>";
-                    }
-                    ?>
+
                     </tbody>
                 </table>
                 <br>
@@ -88,23 +84,13 @@ $teamNOPE = 34;
                 <table id="teamTable" class="table">
                     <thead>
                     <tr>
-                        <th>Študent</th>
-                        <th>Dátum</th>
-                        <th>Predmet</th>
-                        <th>Šablóna</th>
+                        <th>Počet uzavretých tímov</th>
+                        <th>Počet tímov, ku ktorým sa treba vyjadriť</th>
+                        <th>počet tímov s nevyjadrenými študentami</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($data as $row) {
-                        echo "<tr>",
-                        "<td>", $row["student_name"], "</td>",
-                        "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
-                        "<td>", $row["subject"], "</td>",
-                        "<td>", $row["template_id"], "</td>",
-                        "</tr>";
-                    }
-                    ?>
+
                     </tbody>
                 </table>
                 <br>
@@ -116,63 +102,9 @@ $teamNOPE = 34;
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
-    <script>
-
-        const ctx = document.getElementById("studentChart").getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ["Počet súhlasiacich študentov", "Počet nesúhlasiacich študentov", "Počet študentov, ktorí sa nevyjadrili"],
-                datasets: [{
-                    label: 'Počet študentov v predmete',
-                    data: [
-                        <?php echo $studenOK; ?>,
-                        <?php echo $studenNOK; ?>,
-                        <?php echo $studenNOPE; ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(0, 120,0, 0.3)',
-                        'rgba(120, 0, 0, 0.3)',
-                        'rgba(0, 0, 120, 0.3)'
-                    ],
-                    borderColor: [
-                        'rgba(0, 120,0, 1)',
-                        'rgba(120, 0, 0, 1)',
-                        'rgba(0, 0, 120, 1)'
-                    ],
-                    borderWidth: 2
-                }]
-            }
-        });
-
-        const ctx2 = document.getElementById("teamChart").getContext('2d');
-        const myChart2 = new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: ["Počet súhlasiacich študentov", "Počet nesúhlasiacich študentov", "Počet študentov, ktorí sa nevyjadrili"],
-                datasets: [{
-                    label: 'Počet študentov v predmete',
-                    data: [
-                        <?php echo $teamOK; ?>,
-                        <?php echo $teamNOK; ?>,
-                        <?php echo $teamNOPE; ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(0, 120,0, 0.3)',
-                        'rgba(120, 0, 0, 0.3)',
-                        'rgba(0, 0, 120, 0.3)'
-                    ],
-                    borderColor: [
-                        'rgba(0, 120,0, 1)',
-                        'rgba(120, 0, 0, 1)',
-                        'rgba(0, 0, 120, 1)'
-                    ],
-                    borderWidth: 2
-                }]
-            }
-        });
-
-    </script>
+    <script src="build-table.js"></script>
+    <script src="bulid-charts.js"></script>
+    <script src="update-data.js"></script>
     </body>
     </html>
 <?php
