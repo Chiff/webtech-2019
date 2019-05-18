@@ -12,10 +12,9 @@ function printTables(userName, subjectID) {
         console.log('TODO:' + userName);
         //wtf data[0] niekto sa hral
         $.get({
-            url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/results.php?',
+                url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/results.php?',
             error: function(){console.log(arguments)},
             success: function(data){
-                document.getElementById('chooseSubject').setAttribute('hidden', "true"); //TODO, inak to zrobit
                 createTable(data, 'user')
             }
         })
@@ -26,14 +25,21 @@ function createTable(data, userRole){
     let body = document.getElementById('tables');
     let mainTitle = document.createElement("h1");
     body.innerText = '';
+    $('#deleteButton').removeAttr('hidden');
+    console.log(data);
     if (data.length === 0){
         mainTitle.innerText = 'Ziadne vysledky'
         body.appendChild(mainTitle);
         return;
     }
-    let keys = Object.getOwnPropertyNames(data[1].resutlts[0]); //ech, ale proste len  {labe, resulr} ..... alebo []
+    let keys = Object.getOwnPropertyNames(data[0].resutlts[0]); //ech, ale proste len  {labe, resulr} ..... alebo []
     userRole === 'admin' ? mainTitle.innerText = data[0].subject : mainTitle.innerText = 'Predmety';
     body.appendChild(mainTitle);
+    // let deleteButton = document.createElement("button");
+    // deleteButton.innerText = 'Delete Subject';
+    // deleteButton.setAttribute('class', 'btn btn-primary');
+    // body.appendChild(deleteButton);
+
     data.forEach(
         function (subjectTable) {
             let table = document.createElement('table');
@@ -64,7 +70,6 @@ function createTable(data, userRole){
 }
 
 function printDiv() {
-    console.log("MAMA MIA");
     window.frames["print_frame"].document.body.innerHTML = document.getElementById("tables").innerHTML;
     window.frames["print_frame"].window.focus();
     window.frames["print_frame"].window.print();
