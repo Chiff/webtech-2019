@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    updateTeamData();
+});
+
+
 function updateTeamData() {
     $.ajax({
         url: "../api/teams.php",
@@ -8,32 +13,72 @@ function updateTeamData() {
         success: function (response) {
             console.log(response);
 
+            let students_num = 0;
+            let students_ok_num = 0;
+            let students_nok_num = 0;
+            let students_nope_num = 0;
+
+            let teams_num = 0;
+            let teams_ok_num = 0;
+            let teams_nok_num = 0;
+            let teams_nope_num = 0;
+
+            $.each(response, function (i, team) {
+                    teams_num++;
+                    if (team.admin_agree != null) {
+                        if (team.admin_agree) {
+                            teams_ok_num++;
+                        } else teams_nok_num++;
+                    }
+                    const team_studnets = team.teammates.length;
+                    let student_agree = 0;
+                    $.each(team.teammates, function (i, student) {
+                        students_num++;
+                        if (student.agree != null) {
+                            if (student.agree) {
+                                students_ok_num++;
+                                student_agree++;
+                            } else {
+                                students_nok_num++;
+                            }
+                        } else {
+                            students_nope_num++;
+                        }
+                    });
+                    if (student_agree < team_studnets) {
+                        teams_nope_num++;
+                    }
+                }
+            );
+
             updateTables([
                 {
-                    "ok": "10",
-                    "nok": "10",
-                    "nope": "10"
+                    "all": students_num,
+                    "ok": students_ok_num,
+                    "nok": students_nok_num,
+                    "nope": students_nope_num
                 },
                 {
-                    "ok": "26",
-                    "nok": "36",
-                    "nope": "6"
+                    "all": teams_num,
+                    "ok": teams_ok_num,
+                    "nok": teams_nok_num,
+                    "nope": teams_nope_num
                 }
             ]);
 
             studentConfig.data.datasets.forEach(function (dataset) {
                 dataset.data = [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
+                    students_ok_num,
+                    students_nok_num,
+                    students_nope_num,
                 ];
             });
 
             teamConfig.data.datasets.forEach(function (dataset) {
                 dataset.data = [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
+                    teams_ok_num,
+                    teams_nok_num,
+                    teams_nope_num,
                 ];
             });
 

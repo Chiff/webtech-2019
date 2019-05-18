@@ -61,6 +61,7 @@ $teamNOPE = 10;
                 <table id="studentTable" class="table">
                     <thead>
                     <tr>
+                        <th>Počet študentov v predmete</th>
                         <th>Počet súhlasiacich študentov</th>
                         <th>počet nesúhlasiacich študentov</th>
                         <th>počet študentov, ktorí sa nevyjadrili</th>
@@ -84,6 +85,7 @@ $teamNOPE = 10;
                 <table id="teamTable" class="table">
                     <thead>
                     <tr>
+                        <th>Počet tímov</th>
                         <th>Počet uzavretých tímov</th>
                         <th>Počet tímov, ku ktorým sa treba vyjadriť</th>
                         <th>počet tímov s nevyjadrenými študentami</th>
