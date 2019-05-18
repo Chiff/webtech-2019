@@ -67,6 +67,15 @@ class ResultsImporter extends CsvImporter {
                 $subjectRow = $result->fetch_assoc();
                 $SSID = $subjectRow['id'];
 
+                $query = "delete from result where student_subject_id=$SSID";
+                $conn->query($query);
+                if ($conn->error){
+                    $insertWarnings .= "<p class='mb-0'>Chyba pri vymazavani povodneho vysledku: $conn->error</p>";
+                    $hasWarnings = true;
+                }
+
+                $query = "INSERT INTO result(student_subject_id, label, result) VALUES";
+
                 $query = "INSERT INTO `result`(`student_subject_id`, `label`, `result`) VALUES";
                 foreach ($row as $resultKey => $resultValue) {
                     if ($resultKey == 'ID' || $resultKey == 'meno') continue;
