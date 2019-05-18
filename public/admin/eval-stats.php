@@ -100,9 +100,7 @@ if (isset($_GET['project']))
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
-    <script src="build-table.js"></script>
-    <script src="bulid-charts.js"></script>
-    <script src="update-data.js"></script>
+    <script src="update-stats-data.js"></script>
     <script>
         $(document).ready(function () {
             updateTeamData(<?php echo $projectID;?>);

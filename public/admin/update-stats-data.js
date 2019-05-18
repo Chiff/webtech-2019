@@ -1,6 +1,119 @@
 let csvData = [];
 let $idown;
 
+var randomScalingFactor = function () {
+    return Math.round(Math.random() * 100);
+};
+
+var studentConfig = {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data: [
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor(),
+            ],
+            backgroundColor: [
+                'rgba(0, 120,0, 0.3)',
+                'rgba(120, 0, 0, 0.3)',
+                'rgba(0, 0, 120, 0.3)',
+            ],
+            borderColor: [
+                'rgba(0, 120,0, 1)',
+                'rgba(120, 0, 0, 1)',
+                'rgba(0, 0, 120, 1)',
+            ],
+            label: 'Dataset 1'
+        }],
+        labels: [
+            "Počet súhlasiacich študentov",
+            "Počet nesúhlasiacich študentov",
+            "Počet študentov, ktorí sa nevyjadrili",
+        ],
+    },
+    options: {
+        responsive: true,
+        legend: {
+            position: 'top',
+        },
+        title: {
+            display: true,
+            text: 'Počet študentov v predmete'
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    }
+};
+const studentCtx = document.getElementById("studentChart").getContext('2d');
+
+var teamConfig = {
+    type: 'doughnut',
+    data: {
+        labels: ["počet uzavretých tímov", "počet tímov, ku ktorým sa treba vyjadriť", "počet tímov s nevyjadrenými študentami"],
+        datasets: [{
+            label: 'Počet tímov',
+            data: [
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor()
+            ],
+            backgroundColor: [
+                'rgba(0, 120,0, 0.3)',
+                'rgba(120, 0, 0, 0.3)',
+                'rgba(0, 0, 120, 0.3)'
+            ],
+            borderColor: [
+                'rgba(0, 120,0, 1)',
+                'rgba(120, 0, 0, 1)',
+                'rgba(0, 0, 120, 1)'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        legend: {
+            position: 'top'
+        },
+        title: {
+            display: true,
+            text: 'Počet tímov v predmete'
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    }
+};
+const teamCtx = document.getElementById("teamChart").getContext('2d');
+
+function updateTables(response) {
+    $('#teamTable tbody tr:last').remove();
+    $('#studentTable tbody tr:last').remove();
+
+    $('<tr>').append(
+        $('<td>').text(response[0].all),
+        $('<td>').text(response[0].ok),
+        $('<td>').text(response[0].nok),
+        $('<td>').text(response[0].nope)
+    ).appendTo('#studentTable');
+
+    $('<tr>').append(
+        $('<td>').text(response[1].all),
+        $('<td>').text(response[1].ok),
+        $('<td>').text(response[1].nok),
+        $('<td>').text(response[1].nope)
+    ).appendTo('#teamTable');
+}
+
+$(document).ready(function () {
+    window.studentChart = new Chart(studentCtx, studentConfig);
+    window.teamChart = new Chart(teamCtx, teamConfig);
+});
+
 function downloadURL(url) {
     if ($idown) {
         $idown.attr('src', url);
@@ -99,10 +212,7 @@ function updateTeamData(projectID) {
 }
 
 function downloadStats() {
-    console.log(csvData);
-    csvData.push({ais: 85274, name: "Jano", points: 69});
-    csvData.push({ais: 96385, name: "Feri", points: 96});
-    $.post("download-stats.php",
+    $.post("../../src/stats/download-stats.php",
         {
             data: JSON.stringify(csvData)
         },
