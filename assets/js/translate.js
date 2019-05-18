@@ -12,13 +12,13 @@ export function translate(data) {
 				return this.nodeType === 3;
 			}).map(function () {
 			const val = this.nodeValue.trim();
-			console.log(val);
+			//	console.log(val);
 			if (!(!!data[val]) || data[val] === '')
 				return;
 
 			let replace = data[val];
 
-			console.log(data[val]);
+			//	console.log(data[val]);
 
 			if (this.nodeValue[0] === ' ')
 				replace = ' ' + replace;
@@ -33,6 +33,11 @@ export function translate(data) {
 
 export function fetch() {
 	return new Promise((resolve, reject) => {
+		if (config.language === 'sk') {
+			resolve({});
+			return;
+		}
+
 		$.get({
 			url: config.defaultUrl + `/assets/resources/${config.language.toLowerCase()}.json`,
 			success: function (data) {

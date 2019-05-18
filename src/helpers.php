@@ -2,13 +2,15 @@
 require_once(dirname(__DIR__, 1) . '/config/config.php');
 
 session_start();
+$baseFolder = "http://" . $_SERVER['HTTP_HOST'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", dirname(__DIR__, 1));
+
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: ../public/login/index.php');
+    header('location: '.$baseFolder.  '/public/login/index.php');
 } else if (isset($_POST['log_out'])) {
     session_destroy();
     unset($_SESSION['username']);
-    header("location: ../public/login/index.php");
+    header('location: '.$baseFolder.  '/public/login/index.php');
 }
 
 if ($enableDebug) {

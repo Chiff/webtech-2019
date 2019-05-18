@@ -27,8 +27,9 @@ input[type=file] {
 
 
 .import-log {
-    display:  block;
+    display: block;
 }
+
 .import-log.none {
     display: none;
 }
@@ -63,7 +64,8 @@ input[type=file] {
 }
 
 .color-secondary {
-    color: #17a2b8; !important;
+    color: #17a2b8;
+!important;
 }
 
 .page-wrapper {
@@ -81,9 +83,11 @@ body {
     padding: 15px;
     margin: auto;
 }
+
 .form-signin .checkbox {
     font-weight: 400;
 }
+
 .form-signin .form-control {
     position: relative;
     box-sizing: border-box;
@@ -91,26 +95,52 @@ body {
     padding: 10px;
     font-size: 16px;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
+
 .form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-@media all and (max-width: 450px){
+@media all and (max-width: 770px) {
+    .nav.nav-tabs {
+        border-left: 2px solid #333;
+    }
+
+    ul.nav.nav-tabs > li {
+        flex-basis: 100%;
+    }
+
+    ul.nav.nav-tabs > li a {
+        border-left: 0;
+    }
+}
+
+@media all and (max-width: 450px) {
     .form-group.with-file {
         flex-wrap: wrap;
     }
-    .form-group.with-file  .custom-file{
+
+    .form-group.with-file .custom-file {
         flex-basis: 100%;
         margin-top: 0.5em;
     }
+
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
 }
