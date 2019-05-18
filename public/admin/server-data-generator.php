@@ -1,5 +1,11 @@
 <?php
 require_once('../../src/helpers.php');
+
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -14,7 +20,7 @@ require_once('../../src/helpers.php');
 </head>
 <body>
 <?php include('../nav.php'); ?>
-
+<br>
 <div class="mainContainer">
 
     <h1>Import CSV file</h1>

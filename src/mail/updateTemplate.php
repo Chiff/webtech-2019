@@ -1,5 +1,10 @@
 <?php
-require "../../config/config.php";
+require "../helpers.php";
+
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
 
 if (isset($_GET["template"])) {
     $conn = new mysqli($hostname, $username, $password, $dbname);

@@ -24,6 +24,8 @@ class MailSender
             $this->mail->Username = $sender;
             $this->mail->Password = $sender_pass;
             $this->mail->SetFrom($sender);
+            $this->mail->Encoding = 'base64';
+            $this->mail->CharSet = 'utf-8';
         } catch (phpmailerException $e) {
             echo $e->errorMessage();
         }
