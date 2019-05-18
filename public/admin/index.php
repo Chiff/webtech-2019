@@ -3,6 +3,13 @@
 	require_once('../../src/csv/user-importer.php');
 	require_once('../../src/csv/results-importer.php');
 
+    $baseFolder = "http://" . $_SERVER['HTTP_HOST'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", dirname(__DIR__, 1));
+//    echo $baseFolder;
+    if ($_SESSION['username'] != 'admin' ) {
+        $_SESSION['msg'] = "You are not admin";
+        header('location: '.$baseFolder.  '/index.php');
+    }
+
 	if (isset($_POST["results"]) && isset($_POST["subject"]) && isset($_FILES["file"])) {
 		$results = new ResultsImporter();
 		if ($results->autoPilot($_POST["delimiter"], true)) {

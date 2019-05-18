@@ -1,9 +1,5 @@
 <?php
 	session_start();
-	if (isset($_SESSION["login_message"])) {
-		echo $_SESSION["login_message"];
-	}
-
 	if (isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You are log in already";
 		header('location: ../index.php');
@@ -24,5 +20,12 @@
 	<label for="inputPassword" class="mt-3 mb-0">Heslo</label>
 	<input type="password" class="form-control" id="inputPassword" name="password" placeholder="Heslo" required="">
 	<button class="btn btn-lg btn-primary btn-block" type="submit" name="login_user">Prihlásiť sa</button>
+    <span style="color: red">
+        <?php
+        if (isset($_SESSION["login_message"])) {
+            echo $_SESSION["login_message"];
+        }
+        ?>
+    </span>
 </form>
 </body>
