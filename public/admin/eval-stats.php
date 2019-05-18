@@ -23,16 +23,10 @@ if (0 < $result->num_rows) {
         $data[] = $row;
     }
 }
-$subject_rest = "../api/results.php?subject=";
-$project_rest = "../api/teams.php";
 
-$studenOK = 10;
-$studenNOK = 10;
-$studenNOPE = 10;
-
-$teamOK = 10;
-$teamNOK = 10;
-$teamNOPE = 10;
+$projectID = 24;
+if (isset($_GET['project']))
+    $projectID = $_GET['project'];
 
 ?>
     <!DOCTYPE html>
@@ -50,8 +44,6 @@ $teamNOPE = 10;
     <br>
     <div class="mainContainer">
         <br>
-
-        <button id="randomizeData" onclick="updateTeamData()">Randomize Data</button>
 
         <div class="row">
             <div class="col-6">
@@ -101,12 +93,22 @@ $teamNOPE = 10;
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <button onclick="downloadStats()">Download</button>
+        </div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
     <script src="build-table.js"></script>
     <script src="bulid-charts.js"></script>
     <script src="update-data.js"></script>
+    <script>
+        $(document).ready(function () {
+            updateTeamData(<?php echo $projectID;?>);
+        });
+
+    </script>
     </body>
     </html>
 <?php

@@ -1,17 +1,23 @@
-$(document).ready(function () {
-    updateTeamData();
-});
+let csvData = [];
+let $idown;
 
+function downloadURL(url) {
+    if ($idown) {
+        $idown.attr('src', url);
+    } else {
+        $idown = $('<iframe>', {id: 'idown', src: url}).hide().appendTo('body');
+    }
+}
 
-function updateTeamData() {
+function updateTeamData(projectID) {
     $.ajax({
         url: "../api/teams.php",
         type: "get", //send it through get method
         data: {
-            project: 24
+            project: projectID
         },
         success: function (response) {
-            console.log(response);
+            csvData = [];
 
             let students_num = 0;
             let students_ok_num = 0;
@@ -44,6 +50,7 @@ function updateTeamData() {
                         } else {
                             students_nope_num++;
                         }
+                        csvData.push({ais: student.ais_id, name: student.name, points: student.result});
                     });
                     if (student_agree < team_studnets) {
                         teams_nope_num++;
@@ -89,4 +96,17 @@ function updateTeamData() {
             console.log("something went terribly wrong, but I dunno what...")
         }
     });
+}
+
+function downloadStats() {
+    console.log(csvData);
+    csvData.push({ais: 85274, name: "Jano", points: 69});
+    csvData.push({ais: 96385, name: "Feri", points: 96});
+    $.post("download-stats.php",
+        {
+            data: JSON.stringify(csvData)
+        },
+        function (result) {
+            downloadURL(result);
+        });
 }
