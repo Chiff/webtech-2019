@@ -1,6 +1,6 @@
-import { fetch, translate, config } from './translate.js';
+import {fetch, translate, config} from './translate.js';
 
-config.language = 'en';
+config.language = localStorage.getItem("lang") || "sk";
 // TODO - 17.5.2019 - Temporary solution - NEED TO EDIT TO GET TRANSLATIONS WORK
 // config.defaultUrl = 'http://147.175.121.210:8153/Zaver/${TVOJ_FOLDER}';
 
@@ -13,6 +13,11 @@ if (!config.defaultUrl) {
 		})
 		.catch(error => {
 			console.warn(error);
-			alert('nepodarilo sa stihanut preklad pre jazyk en');
+			alert('nepodarilo sa stihanut preklad pre jazyk' + config.language );
 		});
 }
+
+window.setLanguage = function (lang) {
+	localStorage.setItem("lang", lang);
+	location.reload();
+};

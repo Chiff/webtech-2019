@@ -83,4 +83,8 @@ $(document).ready(() => {
 		const $subject = $this.find('#subject-import-results');
 		$subject.val($subject.attr('data-id'));
 	});
+
+	$('#inputGroupFile02').change(function (e) {
+		$(this).next('.custom-file-label').html(e.target.files[0].name);
+	});
 });

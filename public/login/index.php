@@ -13,19 +13,18 @@
 </head>
 <body>
 <form class="form-signin" action="../../src/login-manager.php" method="post">
-	<h1 class="h3 mb-3 font-weight-normal">Prosím prihláste sa</h1>
-	<label for="inputUsername" class="mt-3 mb-0">Meno</label>
-	<input type="text" class="form-control" id="inputUsername" name="username" placeholder="Prihlasovacie meno / IS"
-	       required="" autofocus="">
-	<label for="inputPassword" class="mt-3 mb-0">Heslo</label>
-	<input type="password" class="form-control" id="inputPassword" name="password" placeholder="Heslo" required="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" name="login_user">Prihlásiť sa</button>
-    <span style="color: red">
+	<h1 class="h3 mb-3 font-weight-normal" data-translate>Prosím prihláste sa</h1>
+	<label for="inputUsername" class="mt-3 mb-0">Login / IS</label>
+	<input type="text" class="form-control" id="inputUsername" name="username" required="" autofocus="">
+	<label for="inputPassword" class="mt-3 mb-0"><span data-translate>Heslo</span></label>
+	<input type="password" class="form-control" id="inputPassword" name="password" required="">
+	<button class="btn btn-lg btn-primary btn-block" type="submit" name="login_user"><span data-translate>Prihlásiť sa</span></button>
+    <div class="mt-2" style="color: red">
         <?php
         if (isset($_SESSION["login_message"])) {
             echo $_SESSION["login_message"];
         }
         ?>
-    </span>
+    </div>
 </form>
 </body>
