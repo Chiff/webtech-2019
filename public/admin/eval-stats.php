@@ -24,6 +24,14 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
     return;
 }
 
+$studenOK = 2;
+$studenNOK = 13;
+$studenNOPE = 34;
+
+$teamOK = 2;
+$teamNOK = 13;
+$teamNOPE = 34;
+
 ?>
     <!DOCTYPE html>
     <html lang="sk">
@@ -39,33 +47,132 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
     <?php include('../nav.php'); ?>
     <br>
     <div class="mainContainer">
-        <div>
-            <table id="MailTable">
-                <caption><h3>Študenti</h3></caption>
-                <thead>
-                <tr>
-                    <th>Študent</th>
-                    <th>Dátum</th>
-                    <th>Predmet</th>
-                    <th>Šablóna</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                foreach ($data as $row) {
-                    echo "<tr>",
-                    "<td>", $row["student_name"], "</td>",
-                    "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
-                    "<td>", $row["subject"], "</td>",
-                    "<td>", $row["template_id"], "</td>",
-                    "</tr>";
-                }
-                ?>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col-6">
+                <h3>Študenti</h3>
+                <br>
+
+                <table id="studentTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Študent</th>
+                        <th>Dátum</th>
+                        <th>Predmet</th>
+                        <th>Šablóna</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($data as $row) {
+                        echo "<tr>",
+                        "<td>", $row["student_name"], "</td>",
+                        "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
+                        "<td>", $row["subject"], "</td>",
+                        "<td>", $row["template_id"], "</td>",
+                        "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <br>
+
+                <div>
+                    <canvas id="studentChart"></canvas>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h3>Tímy</h3>
+                <br>
+
+                <table id="teamTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Študent</th>
+                        <th>Dátum</th>
+                        <th>Predmet</th>
+                        <th>Šablóna</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($data as $row) {
+                        echo "<tr>",
+                        "<td>", $row["student_name"], "</td>",
+                        "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
+                        "<td>", $row["subject"], "</td>",
+                        "<td>", $row["template_id"], "</td>",
+                        "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <canvas id="teamChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+    <script>
+
+        const ctx = document.getElementById("studentChart").getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Počet súhlasiacich študentov", "Počet nesúhlasiacich študentov", "Počet študentov, ktorí sa nevyjadrili"],
+                datasets: [{
+                    label: 'Počet študentov v predmete',
+                    data: [
+                        <?php echo $studenOK; ?>,
+                        <?php echo $studenNOK; ?>,
+                        <?php echo $studenNOPE; ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(0, 120,0, 0.3)',
+                        'rgba(120, 0, 0, 0.3)',
+                        'rgba(0, 0, 120, 0.3)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 120,0, 1)',
+                        'rgba(120, 0, 0, 1)',
+                        'rgba(0, 0, 120, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            }
+        });
+
+        const ctx2 = document.getElementById("teamChart").getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ["Počet súhlasiacich študentov", "Počet nesúhlasiacich študentov", "Počet študentov, ktorí sa nevyjadrili"],
+                datasets: [{
+                    label: 'Počet študentov v predmete',
+                    data: [
+                        <?php echo $teamOK; ?>,
+                        <?php echo $teamNOK; ?>,
+                        <?php echo $teamNOPE; ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(0, 120,0, 0.3)',
+                        'rgba(120, 0, 0, 0.3)',
+                        'rgba(0, 0, 120, 0.3)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 120,0, 1)',
+                        'rgba(120, 0, 0, 1)',
+                        'rgba(0, 0, 120, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            }
+        });
+
+    </script>
     </body>
     </html>
 <?php
