@@ -77,6 +77,7 @@
 					</div>
 					<?php if (isset($_GET['form']) && $_GET['form'] == 'addSub') {
 						echo "<div class='alert ".$_GET['type']."'>".$_GET['message']."</div>";
+						echo "<script>$('.nav-tabs a[href=\"#new-subject\"]').tab('show');</script>";
 					}
 					?>
 					<button type="submit" class="btn btn-primary" name="addSub">Submit</button>
@@ -102,6 +103,7 @@
 					</div>
 					<?php if (isset($_GET['form']) && $_GET['form'] == 'addProject') {
 						echo "<div class='alert ".$_GET['type']."'>".$_GET['message']."</div>";
+						echo "<script>$('.nav-tabs a[href=\"#new-project\"]').tab('show');</script>";
 					}
 					?>
 					<button type="submit" class="btn btn-primary" name="addProject">Submit</button>
@@ -150,6 +152,7 @@
 					<div class="response-message">
 						<?php if (isset($users)) {
 							echo $users->getMessage();
+							echo "<script>$('.nav-tabs a[href=\"#import-users\"]').tab('show');</script>";
 						} ?>
 					</div>
 					<button type="submit" name="users" class="btn btn-primary">Submit</button>
@@ -184,6 +187,7 @@
 					</div>
 					<?php if (isset($results)) {
 						echo $results->getMessage();
+						echo "<script>$('.nav-tabs a[href=\"#import-points\"]').tab('show');</script>";
 					} ?>
 					<button type="submit" name="results" class="btn btn-primary">Submit</button>
 				</form>
