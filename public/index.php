@@ -70,6 +70,8 @@ if(isset($responseMessage) && $responseMessage != '') {
 }
 
 ?>
+
+<?php if ($_SESSION['username'] == 'admin') {?>
 <div class = "page-wrapper">
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data"
           id="chooseProject">
@@ -96,7 +98,6 @@ if(isset($responseMessage) && $responseMessage != '') {
         <div class="response-message">
             <?php if (isset($users)) {
                 echo $users->getMessage();
-                echo "<script>$('.nav-tabs a[href=\"#import-users\"]').tab('show');</script>";
             } ?>
         </div>
 	    <p id="responseMessagae-proj"></p>
@@ -113,4 +114,5 @@ if(isset($responseMessage) && $responseMessage != '') {
 		</div>
 
 </div>
+<?php } ?>
 </body>
