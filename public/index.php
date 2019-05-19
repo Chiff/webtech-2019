@@ -47,9 +47,9 @@ if(isset($_GET['subjectToDelete'])){
 }
 ?>
 
-<div id='tables' class="page-wrapper"></div>
-<div class="page-wrapper">
-    <button id='printButton' class="btn btn-primary page-wrapper" onclick="printDiv()" hidden="true">Print</button>
+<div id='tables' class="page-wrapper" hidden></div>
+<div id='printButton' class="page-wrapper" hidden>
+    <button  class="btn btn-primary page-wrapper" onclick="printDiv('tables')">Print</button>
 <!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
     <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 </div>
@@ -99,7 +99,18 @@ if(isset($responseMessage) && $responseMessage != '') {
                 echo "<script>$('.nav-tabs a[href=\"#import-users\"]').tab('show');</script>";
             } ?>
         </div>
+	    <p id="responseMessagae-proj"></p>
         <button type="submit" name="users" class="btn btn-primary">Zobraziť</button>
+	    <button id="deleteButton-proj" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true">Vymazať</button>
     </form>
+
+	<div id="tables-proj" hidden></div>
+
+	<div id='printButton-proj' hidden>
+			<button  class="btn btn-primary page-wrapper" onclick="printDiv('tables-proj')">Print</button>
+			<!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
+			<iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+		</div>
+
 </div>
 </body>
