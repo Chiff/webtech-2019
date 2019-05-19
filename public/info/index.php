@@ -20,7 +20,7 @@ require_once('../../src/helpers.php');
                 <th>Dinh Nguyen Tien</th>
                 <th>Martin Filo</th>
                 <th>Radoslav Hlatky</th>
-                <th>Dominik Benco</th>
+                <th>Dominik Simko</th>
             </tr>
         </thead>
         <tbody>
