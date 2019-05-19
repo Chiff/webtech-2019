@@ -2,8 +2,7 @@
 require_once('../../src/helpers.php');
 
 if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
-    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
-    return;
+    header('location:'. $baseFolder. '/public/login/index.php');
 }
 
 $projectID = 25;
@@ -17,7 +16,7 @@ if (isset($_GET['project']))
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-        <title>Štatistiky odoslaných mailov</title>
+        <title>Štatistika evaluácie</title>
         <?php include('../head.php'); ?>
 
     </head>
@@ -29,16 +28,16 @@ if (isset($_GET['project']))
 
         <div class="row">
             <div class="col-6">
-                <h3>Študenti</h3>
+                <h3 data-translate>Študenti</h3>
                 <br>
 
                 <table id="studentTable" class="table">
                     <thead>
                     <tr>
-                        <th>Počet študentov v predmete</th>
-                        <th>Počet súhlasiacich študentov</th>
-                        <th>počet nesúhlasiacich študentov</th>
-                        <th>počet študentov, ktorí sa nevyjadrili</th>
+                        <th data-translate>Počet študentov v predmete</th>
+                        <th data-translate>Počet súhlasiacich študentov</th>
+                        <th data-translate>počet nesúhlasiacich študentov</th>
+                        <th data-translate>počet študentov, ktorí sa nevyjadrili</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,16 +52,16 @@ if (isset($_GET['project']))
             </div>
 
             <div class="col-6">
-                <h3>Tímy</h3>
+                <h3 data-translate>Tímy</h3>
                 <br>
 
                 <table id="teamTable" class="table">
                     <thead>
                     <tr>
-                        <th>Počet tímov</th>
-                        <th>Počet uzavretých tímov</th>
-                        <th>Počet tímov, ku ktorým sa treba vyjadriť</th>
-                        <th>počet tímov s nevyjadrenými študentami</th>
+                        <th data-translate>Počet tímov</th>
+                        <th data-translate>Počet uzavretých tímov</th>
+                        <th data-translate>Počet tímov, ku ktorým sa treba vyjadriť</th>
+                        <th data-translate>počet tímov s nevyjadrenými študentami</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,7 +75,7 @@ if (isset($_GET['project']))
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <button onclick="downloadStats()">Download</button>
+            <button onclick="downloadStats()" data-translate>Download</button>
         </div>
 
     </div>
