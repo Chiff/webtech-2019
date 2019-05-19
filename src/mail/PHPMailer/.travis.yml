@@ -24,7 +24,7 @@ before_script:
   - sudo mkdir -p /var/qmail/bin
   - sudo cp fakesendmail.sh /var/qmail/bin/sendmail
   - sudo cp fakesendmail.sh /usr/sbin/sendmail
-  - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' > $(php --ini|grep -m 1 "ini files in:"|cut -d ":" -printTables 2)/sendmail.ini
+  - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' > $(php --ini|grep -m 1 "ini files in:"|cut -d ":" -printSubjectTables 2)/sendmail.ini
 script:
   - phpunit --configuration ../travis.phpunit.xml.dist
 after_script:

@@ -57,7 +57,7 @@ if(isset($_GET['subjectToDelete'])){
 <script>
     let login = '<?php echo $_SESSION["username"]?>';
    if(login !== "admin"){
-       printTables(login, 1)
+       printSubjectTables(login, 1)
    }
 </script>
 
@@ -70,4 +70,36 @@ if(isset($responseMessage) && $responseMessage != '') {
 }
 
 ?>
+<div class = "page-wrapper">
+    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data"
+          id="chooseProject">
+        <div class="form-group combo-wrapper async">
+            <label for="subject-import" class="combo"><span data-translate>Vyber</span> <span
+                        data-translate>predmet</span></label>
+            <input type="text" class="form-control combo" id="subject-import" name="subject" required
+                   autocomplete="off">
+            <ul class="jumbotron" style="display: none;" id="subject-list-import">
+                <li data-disabled="true">Udaje sa načítavajú</li>
+            </ul>
+        </div>
+
+        <div class="form-group combo-wrapper async">
+            <label for="project-import" class="combo"><span data-translate>Vyber</span> <span
+                        data-translate>projekt</span></label>
+            <input type="text" class="form-control combo" id="project-import" name="project" required
+                   autocomplete="off"
+                   disabled>
+            <ul class="jumbotron" style="display: none;" id="project-list-import">
+                <li data-disabled="true">Udaje sa načítavajú</li>
+            </ul>
+        </div>
+        <div class="response-message">
+            <?php if (isset($users)) {
+                echo $users->getMessage();
+                echo "<script>$('.nav-tabs a[href=\"#import-users\"]').tab('show');</script>";
+            } ?>
+        </div>
+        <button type="submit" name="users" class="btn btn-primary">Zobraziť</button>
+    </form>
+</div>
 </body>
