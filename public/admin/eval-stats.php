@@ -16,7 +16,7 @@ if (isset($_GET['project']))
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-        <title>Štatistika evaluácie</title>
+        <title data-translate>Štatistika evaluácie</title>
         <?php include('../head.php'); ?>
 
     </head>
@@ -36,8 +36,8 @@ if (isset($_GET['project']))
                     <tr>
                         <th data-translate>Počet študentov v predmete</th>
                         <th data-translate>Počet súhlasiacich študentov</th>
-                        <th data-translate>počet nesúhlasiacich študentov</th>
-                        <th data-translate>počet študentov, ktorí sa nevyjadrili</th>
+                        <th data-translate>Počet nesúhlasiacich študentov</th>
+                        <th data-translate>Počet študentov, ktorí sa nevyjadrili</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,7 +61,7 @@ if (isset($_GET['project']))
                         <th data-translate>Počet tímov</th>
                         <th data-translate>Počet uzavretých tímov</th>
                         <th data-translate>Počet tímov, ku ktorým sa treba vyjadriť</th>
-                        <th data-translate>počet tímov s nevyjadrenými študentami</th>
+                        <th data-translate>Počet tímov s nevyjadrenými študentami</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,7 +75,7 @@ if (isset($_GET['project']))
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <button onclick="downloadStats()" data-translate>Download</button>
+            <button onclick="downloadStats()" data-translate>Stiahni</button>
         </div>
 
     </div>

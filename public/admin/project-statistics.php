@@ -30,7 +30,7 @@ if (0 < $result->num_rows) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-        <title>Štatistiky projektov</title>
+        <title data-translate>Štatistiky projektov</title>
         <?php include('../head.php'); ?>
         <!-- data tables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
@@ -49,7 +49,7 @@ if (0 < $result->num_rows) {
     <div class="mainContainer">
         <div class="d-flex justify-content-center">
             <table id="MailTable" class="table">
-                <caption><h3 data-translate>Štatistiky projektov </h3></caption>
+                <caption><h3 data-translate>Štatistiky projektov</h3></caption>
                 <thead>
                 <tr>
                     <th data-translate>Meno projektu</th>

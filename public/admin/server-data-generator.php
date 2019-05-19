@@ -2,8 +2,7 @@
 require_once('../../src/helpers.php');
 
 if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
-    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
-    return;
+    header('location:'. $baseFolder. '/public/login/index.php');
 }
 
 ?>
@@ -13,7 +12,7 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-    <title>Generovanie prihlasovacích údajov</title>
+    <title data-translate>Generovanie prihlasovacích údajov</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../../assets/css/widgEditor.css">
     <script src="../../assets/js/widgEditor.js"></script>
     <?php include('../head.php'); ?>
@@ -23,7 +22,7 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
 <br>
 <div class="mainContainer">
 
-    <h1 data-traslate>Import csv suboru</h1>
+    <h1 data-translate>Import csv suboru</h1>
     <form action='<?php echo $_SERVER["PHP_SELF"]; ?>' method='post' enctype="multipart/form-data">
         <p data-translate>Import suboru</p> <input type='file' name='sel_file' size='20'>
         <br>

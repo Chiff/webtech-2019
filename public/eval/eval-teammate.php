@@ -8,7 +8,7 @@ require_once('../../src/helpers.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-    <title>Evaluácia</title>
+    <title data-translate>Evaluácia</title>
     <?php include('../head.php'); ?>
 
 </head>
@@ -18,10 +18,10 @@ require_once('../../src/helpers.php');
 <div class="mainContainer">
     <div class="d-flex justify-content-center">
         <table id="teamTable" class="table" style="width: 75%">
-            <caption><?php echo $_GET['project_name'] ?> Udelené body: <?php echo $_GET['project_points'] ?> </caption>
+            <caption data-translate><?php echo $_GET['project_name'] ?> Udelené body: <?php echo $_GET['project_points'] ?> </caption>
             <thead>
-            <th>Meno a priezvisko</th>
-            <th>Pridelené body</th>
+            <th data-translate>Meno a priezvisko</th>
+            <th data-translate>Pridelené body</th>
             <th></th>
             </thead>
             <tbody>
@@ -38,15 +38,15 @@ require_once('../../src/helpers.php');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Súhlas s rozdelením bodov</h4>
+                <h4 class="modal-title" data-translate>Súhlas s rozdelením bodov</h4>
             </div>
             <div class="modal-body">
-                <p>Naozaj súhlasíte s rozdelením bodov?<br>Rozhodnutie po odsúhlasení bude nemenné.</p>
+                <p data-translate>Naozaj súhlasíte s rozdelením bodov?<br>Rozhodnutie po odsúhlasení bude nemenné.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">zrušiť</button>
                 <button type="button" class="btn btn-default" onclick="agreeResult(1,<?php echo $_GET['team_id']; ?>)"
-                        data-dismiss="modal">Pokračovať
+                        data-dismiss="modal" data-translate>Pokračovať
                 </button>
             </div>
         </div>
@@ -61,15 +61,15 @@ require_once('../../src/helpers.php');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Nesúhlas s rozdelením bodov</h4>
+                <h4 class="modal-title" data-translate>Nesúhlas s rozdelením bodov</h4>
             </div>
             <div class="modal-body">
-                <p>Naozaj nesúhlasíte s rozdelením bodov?<br>Rozhodnutie po neodsúhlasení bude nemenné.</p>
+                <p data-translate>Naozaj nesúhlasíte s rozdelením bodov?<br>Rozhodnutie po neodsúhlasení bude nemenné.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">zrušiť</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" data-translate>zrušiť</button>
                 <button type="button" class="btn btn-default" onclick="agreeResult(0,<?php echo $_GET['team_id']; ?>)"
-                        data-dismiss="modal">Pokračovať
+                        data-dismiss="modal"data-translate>Pokračovať
                 </button>
             </div>
         </div>

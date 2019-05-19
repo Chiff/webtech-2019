@@ -24,35 +24,35 @@ require_once('../../src/helpers.php');
         </thead>
         <tbody>
         <tr>
-            <td>t</td>
+            <td>Uprava databazy</td>
             <td>Navrh databazy</td>
             <td>Navrh databazy</td>
             <td>Navrh databazy</td>
             <td>Uprava databazy</td>
         </tr>
         <tr>
-            <td>t</td>
+            <td>Preklady</td>
             <td>d</td>
             <td>Preklady</td>
             <td>Preklady</td>
             <td>Preklady</td>
         </tr>
         <tr>
-            <td>t</td>
+            <td>Odosielanie mailov</td>
             <td>d</td>
             <td>Navrh frontendu</td>
             <td>Navrh a tvorba frontendu</td>
             <td>Tvorba sablony</td>
         </tr>
         <tr>
-            <td>t</td>
+            <td>Statistiky mailov</td>
             <td>d</td>
             <td>Admin page</td>
             <td>Admin page</td>
             <td>Import csv suboru s udajmi o osobach</td>
         </tr>
         <tr>
-            <td>t</td>
+            <td>Pohľad študenta</td>
             <td>d</td>
             <td>Nahranie a spracovanie CSV</td>
             <td>Navrh projektovej struktury</td>

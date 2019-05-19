@@ -1,18 +1,13 @@
 let csvData = [];
 let $idown;
 
-var randomScalingFactor = function () {
-    return Math.round(Math.random() * 100);
-};
 
 var studentConfig = {
     type: 'doughnut',
     data: {
         datasets: [{
             data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
+                0, 0, 0
             ],
             backgroundColor: [
                 'rgba(0, 120,0, 0.3)',
@@ -56,9 +51,7 @@ var teamConfig = {
         datasets: [{
             label: 'Počet tímov',
             data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
+                0, 0, 0
             ],
             backgroundColor: [
                 'rgba(0, 120,0, 0.3)',
@@ -163,7 +156,7 @@ function updateTeamData(projectID) {
                         } else {
                             students_nope_num++;
                         }
-                        csvData.push({ais: student.student_id, name: student.student[0].name, points: student.result});
+                        csvData.push({ais: student.student_id, name: student.name, points: student.result});
                     });
                     if (student_agree < team_studnets) {
                         teams_nope_num++;
@@ -201,6 +194,7 @@ function updateTeamData(projectID) {
                     teams_nope_num,
                 ];
             });
+
 
             window.studentChart.update();
             window.teamChart.update();

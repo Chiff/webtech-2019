@@ -8,7 +8,7 @@ require_once('../../src/helpers.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-    <title>Evaluácia</title>
+    <title data-translate>Evaluácia</title>
     <?php include('../head.php'); ?>
 
 </head>
@@ -20,11 +20,11 @@ require_once('../../src/helpers.php');
         <form name="points_form" id="points_form">
             <input type="hidden" name="team" value="<?php echo $_GET['team_id'] ?>">
             <table id="teamTable" class="table">
-                <caption><?php echo $_GET['project_name'] ?> Udelené
+                <caption data-translate><?php echo $_GET['project_name'] ?> Udelené
                     body: <?php echo $_GET['project_points'] ?> </caption>
                 <thead>
-                <th>Meno a priezvisko</th>
-                <th>Pridelené body</th>
+                <th data-translate>Meno a priezvisko</th>
+                <th data-translate>Pridelené body</th>
                 <th></th>
                 </thead>
                 <tbody>

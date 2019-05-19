@@ -43,17 +43,23 @@ function updateTeam(team) {
 
     $.each(team, function (index, student) {
         if (uid == student.student_id && student.agree == null) {
+            let td1 = $('<td>').text(student.result != null ? student.result : nopoints);
+            td1.attr("data-translate", "");
+            let td2 = $('<td>').html(student.result != null ? "<button id='nopeBtn' data-toggle=\"modal\" data-target=\"#disagreeModal\" class=\"btn btn-outline-secondary\">Nesúhlasím</button>\n" +
+                "<button id='okBtn' data-toggle=\"modal\" data-target=\"#agreeModal\" class=\"btn btn-outline-primary\">Súhlasím</button>" : noresp)
+            td2.attr("data-translate", "");
+
             $('<tr>').append(
-                $('<td>').text(student.name),
-                $('<td>').text(student.result != null ? student.result : nopoints),
-                $('<td>').html(student.result != null ? "<button id='nopeBtn' data-toggle=\"modal\" data-target=\"#disagreeModal\" class=\"btn btn-outline-secondary\">Nesúhlasím</button>\n" +
-                    "<button id='okBtn' data-toggle=\"modal\" data-target=\"#agreeModal\" class=\"btn btn-outline-primary\">Súhlasím</button>" : noresp)
+                $('<td>').text(student.name), td1, td2
             ).appendTo('#teamTable');
         } else {
+            let td1 = $('<td>').text(student.result != null ? student.result : nopoints);
+            td1.attr("data-translate", "");
+            let td2 = $('<td>').html(student.agree != null ? (student.agree ? ok : nok) : noresp);
+            td2.attr("data-translate", "");
+
             $('<tr>').append(
-                $('<td>').text(student.name),
-                $('<td>').text(student.result != null ? student.result : nopoints),
-                $('<td>').html(student.agree != null ? (student.agree ? ok : nok) : noresp)
+                $('<td>').text(student.name), td1, td2
             ).appendTo('#teamTable');
         }
     });
