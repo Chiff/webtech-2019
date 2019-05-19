@@ -163,7 +163,7 @@ function updateTeamData(projectID) {
                         } else {
                             students_nope_num++;
                         }
-                        csvData.push({ais: student.ais_id, name: student.name, points: student.result});
+                        csvData.push({ais: student.student_id, name: student.student[0].name, points: student.result});
                     });
                     if (student_agree < team_studnets) {
                         teams_nope_num++;

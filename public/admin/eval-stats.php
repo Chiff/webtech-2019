@@ -24,7 +24,7 @@ if (0 < $result->num_rows) {
     }
 }
 
-$projectID = 24;
+$projectID = 25;
 if (isset($_GET['project']))
     $projectID = $_GET['project'];
 
