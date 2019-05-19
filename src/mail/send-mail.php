@@ -1,7 +1,11 @@
 <?php
-//require_once "../helpers.php";
+require_once "../helpers.php";
 require_once "../../src/mail/MailSender.php";
-require_once "../../config/config.php";
+
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
 
 $csv_array = [];
 $mail_sql = "INSERT INTO `mail_statistics`(`student_name`, `subject`, `template_id`) VALUES (?,?,?)";

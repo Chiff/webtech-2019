@@ -1,6 +1,10 @@
 <?php
+require_once('../../src/helpers.php');
 
-require "../../config/config.php";
+if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
+    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
+    return;
+}
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $dbname);
@@ -42,30 +46,33 @@ if (0 < $result->num_rows) {
     </head>
     <body>
     <?php include('../nav.php'); ?>
+    <br>
     <div class="mainContainer">
-        <table id="MailTable">
-            <caption><h3>Odoslané emaily</h3></caption>
-            <thead>
-            <tr>
-                <th>Študent</th>
-                <th>Dátum</th>
-                <th>Predmet</th>
-                <th>Šablóna</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            foreach ($data as $row) {
-                echo "<tr>",
-                "<td>", $row["student_name"], "</td>",
-                "<td>", $row["date"], "</td>",
-                "<td>", $row["subject"], "</td>",
-                "<td>", $row["template_id"], "</td>",
-                "</tr>";
-            }
-            ?>
-            </tbody>
-        </table>
+        <div>
+            <table id="MailTable">
+                <caption><h3>Odoslané emaily</h3></caption>
+                <thead>
+                <tr>
+                    <th>Študent</th>
+                    <th>Dátum</th>
+                    <th>Predmet</th>
+                    <th>Šablóna</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($data as $row) {
+                    echo "<tr>",
+                    "<td>", $row["student_name"], "</td>",
+                    "<td>", date('d/m/Y', strtotime($row["date"])), "</td>",
+                    "<td>", $row["subject"], "</td>",
+                    "<td>", $row["template_id"], "</td>",
+                    "</tr>";
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     <script>
         const table = $('#MailTable').DataTable({
