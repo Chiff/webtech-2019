@@ -23,9 +23,9 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
 <br>
 <div class="mainContainer">
 
-    <h1>Import CSV file</h1>
+    <h1 data-traslate>Import csv suboru</h1>
     <form action='<?php echo $_SERVER["PHP_SELF"]; ?>' method='post' enctype="multipart/form-data">
-        Import File : <input type='file' name='sel_file' size='20'>
+        <p data-translate>Import suboru</p> <input type='file' name='sel_file' size='20'>
         <br>
         <label>
             Delimiter:
@@ -108,7 +108,7 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
             fputcsv($fp, $header, $_POST['delimiter']);
 
             echo "<table id='my_table'>";
-            echo "<tr><th>ID</th><th>Meno a priezvisko</th><th>email</th><th>login</th></tr>";
+            echo "<tr><th>ID</th><th data-translate>Meno a priezvisko</th><th>email</th><th>login</th></tr>";
 
             $row = 1;
             if (($handle = fopen($filename, "r")) !== FALSE) {
@@ -142,12 +142,12 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
                 fclose($handle);
             }
             echo "</table>";
-            echo "Successfully Imported<br>";
+            echo "<p data-translate>Uspesne importovane</p><br>";
             fclose($handle);
 
             fclose($fp);
 
-            echo "<a style='color: #ff0000;' href=\"../../uploaded/download.csv\">Download CSV file</a>" . "<br>";
+            echo "<a style='color: #ff0000;' href=\"../../uploaded/download.csv\" data-translate>Stiahnut CSV subor</a>" . "<br>";
 
 
             // VELKY CSV
@@ -167,7 +167,7 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
             }
 
             echo "<table id='my_table'>";
-            echo "<tr><th>ID</th><th>Meno a priezvisko</th><th>email</th><th>login</th><th>heslo</th><th>verejnaIP</th><th>privatnaIP</th><th>ssh</th><th>http</th><th>https</th><th>misc1</th><th>misc2</th></tr>";
+            echo "<tr><th>ID</th><th data-traslate>Meno a priezvisko</th><th>email</th><th>login</th><th>heslo</th><th>verejnaIP</th><th>privatnaIP</th><th>ssh</th><th>http</th><th>https</th><th>misc1</th><th>misc2</th></tr>";
 
             $row = 1;
             if (($fp = fopen($server_csv, "r")) !== FALSE) {
@@ -231,27 +231,27 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
                         <input type="email" name="sender_email" required>
                     </label>
                     <br>
-                    <label>
+                    <label data-translate>
                         Heslo:
                         <input type="password" name="sender_pass" required>
                     </label>
                     <br>
-                    <label>
+                    <label data-translate>
                         Predmet:
                         <input type="text" name="subject">
                     </label>
                     <br>
-                    <label>
+                    <label data-translate>
                         Subor:
                         <input type="file" name="attachment">
                     </label>
                     <br>
-                    <label for="template_select">Sablona:</label>
+                    <label for="template_select" data-translate>Sablona</label>
                     <select name="template_select" id="template_select" onchange="updateTemplate()">
                         <?php genOptions($message_ids, $message_vals, $_POST["template_id"]); ?>
                     </select>
                     <br>
-                    <label for="editTemplate">Editacia sablony</label>
+                    <label for="editTemplate" data-translate>Editacia sablony</label>
                     <input type="checkbox" id="editTemplate" name="html" onclick="edit()"/>
 
                     <br>
