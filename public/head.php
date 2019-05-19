@@ -14,4 +14,5 @@
         crossorigin="anonymous"></script>
 <script src='<?php echo $js ?>/main.js' type='module'></script>
 <script src='<?php echo $js?>/translate.js' type='module'></script>
+<script>window.rootUrl = '<?php echo $baseFolder ?>'</script>
 

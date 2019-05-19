@@ -2,7 +2,7 @@ function printSubjectTables(userName, subjectID) {
     if (userName === "admin"){
         console.log('TODO:' + userName);
         $.get({
-            url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/results.php?subject='+subjectID,
+          url: window.rootUrl + '/public/api/results.php?subject=' + subjectID,
             error: function(){console.log(arguments)},
             success: function(data){
                 createSubjectTable(data, 'admin')
@@ -12,7 +12,7 @@ function printSubjectTables(userName, subjectID) {
         console.log('TODO:' + userName);
         //wtf data[0] niekto sa hral
         $.get({
-                url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/results.php?',
+          url: window.rootUrl + '/public/api/results.php?',
             error: function(){console.log(arguments)},
             success: function(data){
                 createSubjectTable(data, 'user')
@@ -59,7 +59,7 @@ function createSubjectTable(data, userRole){
                             td.innerText = element[value];
                             tr.appendChild(td);
                         }
-                    )
+                    );
 
                     if (counter % 2 == 0){
                         tr.setAttribute('class', 'table-dark');
@@ -70,7 +70,7 @@ function createSubjectTable(data, userRole){
 
                     tbody.appendChild(tr);
                 }
-            )
+            );
             table.appendChild(tbody);
             body.append(tableName);
             body.appendChild(table);
@@ -87,7 +87,7 @@ function printDiv() {
 function printProjectTables(userName, subjectID) {
     if (userName === "admin"){
         $.get({
-            url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/teams.php?project='+subjectID,
+          url: window.rootUrl + '/public/api/teams.php?project=' + subjectID,
             error: function(){console.log(arguments)},
             success: function(data){
                 console.log(data);
@@ -95,7 +95,7 @@ function printProjectTables(userName, subjectID) {
         })
     } else { //TODO dat prec :D
         $.get({
-            url: 'http://147.175.121.210:8153/Zaver/DNT/public/api/results.php?',
+          url: window.rootUrl + '/public/api/results.php?',
             error: function(){console.log(arguments)},
             success: function(data){
                 createSubjectTable(data, 'user')
