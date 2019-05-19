@@ -75,7 +75,7 @@
 						<input type="text" id="subject" class="form-control" name="subject" required>
 					</div>
 					<?php if (isset($_GET['form']) && $_GET['form'] == 'addSub') {
-						echo "<div class='alert ".$_GET['type']."'>".$_GET['message']."</div>";
+						echo "<div class='alert ".$_GET['type']."' data-translate>'".$_GET['message']."</div>";
 						echo "<script>$('.nav-tabs a[href=\"#new-subject\"]').tab('show');</script>";
 					}
 					?>
@@ -101,7 +101,7 @@
 						<input type="text" name="project" class="form-control" id="project" required>
 					</div>
 					<?php if (isset($_GET['form']) && $_GET['form'] == 'addProject') {
-						echo "<div class='alert ".$_GET['type']."'>".$_GET['message']."</div>";
+						echo "<div class='alert ".$_GET['type']."' data-translate>".$_GET['message']."</div>";
 						echo "<script>$('.nav-tabs a[href=\"#new-project\"]').tab('show');</script>";
 					}
 					?>
@@ -117,7 +117,7 @@
 						<input type="text" class="form-control combo" id="subject-import" name="subject" required
 						       autocomplete="off">
 						<ul class="jumbotron" style="display: none;" id="subject-list-import">
-							<li data-disabled="true">Udaje sa načítavajú</li>
+							<li data-disabled="true" data-translate>Udaje sa načítavajú</li>
 						</ul>
 					</div>
 
@@ -128,7 +128,7 @@
 						       autocomplete="off"
 						       disabled>
 						<ul class="jumbotron" style="display: none;" id="project-list-import">
-							<li data-disabled="true">Udaje sa načítavajú</li>
+							<li data-disabled="true" data-translate>Udaje sa načítavajú</li>
 						</ul>
 					</div>
 					<div class="form-group with-file">
@@ -141,9 +141,9 @@
 							       maxlength="1"
 							       minlength="1" required>
 							<div style="flex-grow: 3" class="custom-file">
-								<input type="file" name="file" class="custom-file-input" id="inputGroupFile02" required>
-								<label class="custom-file-label" for="inputGroupFile02"
-								       aria-describedby="inputGroupFileAddon02"><span data-translate>Vyber</span> CSV
+								<input type="file" name="file" class="custom-file-input" id="inputGroupFile01" required>
+								<label class="custom-file-label" for="inputGroupFile01"
+								       aria-describedby="inputGroupFileAddon01"><span data-translate>Vyber</span> CSV
 									<span data-translate>na</span> import</label>
 							</div>
 						</div>
