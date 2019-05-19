@@ -4,14 +4,14 @@ require_once('../../src/helpers.php');
 
 <!DOCTYPE html>
 <head>
-    <title data-translate>Rozdelenie uloh</title>
+    <title data-translate>Ulohy</title>
     <?php include('../head.php'); ?>
     <?php echo "<script src='comboBoxForResult.js' type='module'></script>"; // lebo php ¯\_(ツ)_/¯ ?>
 </head>
 <body>
 <?php include('../nav.php'); ?>
 <div class="page-wrapper">
-    <h2>Rozdelenie uloh</h2>
+    <h2 data-translate>Ulohy</h2>
 
     <table border="1">
         <thead>
