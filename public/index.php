@@ -30,7 +30,7 @@ if(isset($_GET['subjectToDelete'])){
 <!--pre admina-->
 <?php if ($_SESSION['username'] == 'admin') {
  echo '
-<div class = "page-wrapper printableTable">
+<div class = "page-wrapper">
 <form action="index.php" method="post" id="chooseSubject">
     <div class="form-group combo-wrapper async">
         <label for="subject" class="combo">Predmet</label>
@@ -47,10 +47,10 @@ if(isset($_GET['subjectToDelete'])){
 }
 ?>
 
-<div id='tables' class="printableTable page-wrapper"></div>
-<div class="page-wrapper printableTable">
+<div id='tables' class="page-wrapper"></div>
+<div class="page-wrapper">
     <button id='printButton' class="btn btn-primary page-wrapper" onclick="printDiv()" hidden="true">Print</button>
-    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>
+<!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
     <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 </div>
 

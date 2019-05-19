@@ -1,4 +1,3 @@
-let skuska = 'lala';
 function printTables(userName, subjectID) {
     if (userName === "admin"){
         console.log('TODO:' + userName);
@@ -28,8 +27,6 @@ function createTable(data, userRole){
     body.innerText = '';
     $('#deleteButton').removeAttr('hidden');
     $('#printButton').removeAttr('hidden');
-    $('#printButton2').removeAttr('hidden');
-
     if (data.length === 0){
         mainTitle.innerText = ''
         $('#responseMessage').text('Ziadne výsledky');
@@ -43,11 +40,6 @@ function createTable(data, userRole){
     let keys = Object.getOwnPropertyNames(data[0].resutlts[0]); //ech, ale proste len  {labe, resulr} ..... alebo []
     userRole === 'admin' ? mainTitle.innerText = data[0].subject : mainTitle.innerText = 'Predmety';
     body.appendChild(mainTitle);
-    // let deleteButton = document.createElement("button");
-    // deleteButton.innerText = 'Delete Subject';
-    // deleteButton.setAttribute('class', 'btn btn-primary');
-    // body.appendChild(deleteButton);
-
     data.forEach(
         function (subjectTable) {
             let table = document.createElement('table');
@@ -88,17 +80,6 @@ function createTable(data, userRole){
 
 function printDiv() {
     window.frames["print_frame"].document.body.innerHTML = document.getElementById("tables").innerHTML;
-    window.frames["print_frame"].window.focus();
-    window.frames["print_frame"].window.print();
-}
-
-function printAll() {
-    window.frames["print_frame"].document.body.innerHTML = '';
-    allClasses = document.getElementsByClassName("printableTable");
-    for (let i = 0; i < allClasses.length; i++){
-        window.frames["print_frame"].document.body.innerHTML += allClasses[i].innerHTML;
-    }
-    // window.frames["print_frame"].document.body.innerHTML = document.getElementsByClassName("printableTable")[0].innerHTML;
     window.frames["print_frame"].window.focus();
     window.frames["print_frame"].window.print();
 }

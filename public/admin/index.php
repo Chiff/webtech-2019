@@ -38,9 +38,7 @@
 </head>
 <body>
 <?php include('../nav.php'); ?>
-<script type="text/javascript" src="../result.js"></script>
-
-<div class="page-wrapper pt-0 printableTable" style="margin-top: -2px">
+<div class="page-wrapper pt-0" style="margin-top: -2px">
 	<div class="bs-component">
 		<ul class="nav nav-tabs mb-3" style="border-bottom: 0">
 			<li class="nav-item">
@@ -196,10 +194,4 @@
 		</div>
 	</div>
 </div>
-
-<div class="page-wrapper printableTable">
-    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()">Print All</button>
-    <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
-</div
-<script type="text/javascript" src="../result.js"></script>
 </body>
