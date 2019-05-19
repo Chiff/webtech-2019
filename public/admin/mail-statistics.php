@@ -2,8 +2,7 @@
 require_once('../../src/helpers.php');
 
 if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'admin' || $_SESSION["uid"] != "999999999") {
-    writeError(401, 'Unauthorized', "Ak chces pokracovat prihlas sa!");
-    return;
+    header('location:'. $baseFolder. '/public/login/index.php');
 }
 
 // Create connection
@@ -31,7 +30,7 @@ if (0 < $result->num_rows) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="MSF8nltigNlCWnsp5OzxANLiQrnyKkkAKl-DhoW6GuU"/>
-        <title>Štatistiky odoslaných mailov</title>
+        <title data-translate>Štatistiky odoslaných mailov</title>
         <?php include('../head.php'); ?>
         <!-- data tables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
@@ -49,14 +48,14 @@ if (0 < $result->num_rows) {
     <br>
     <div class="mainContainer">
         <div>
-            <table id="MailTable">
-                <caption><h3>Odoslané emaily</h3></caption>
+            <table id="MailTable" class="table">
+                <caption><h3 data-translate>Odoslané emaily</h3></caption>
                 <thead>
                 <tr>
-                    <th>Študent</th>
-                    <th>Dátum</th>
-                    <th>Predmet</th>
-                    <th>Šablóna</th>
+                    <th data-translate>Študent</th>
+                    <th data-translate>Dátum</th>
+                    <th data-translate>Predmet</th>
+                    <th data-translate>Šablóna</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,6 +74,40 @@ if (0 < $result->num_rows) {
         </div>
     </div>
     <script>
+
+        var english = {"sLengthMenu": "Display _MENU_ records per page",
+            "sZeroRecords": "Nothing found - sorry",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+            "sInfoEmpty": "Showing 0 to 0 of 0 records",
+            "sInfoFiltered": "(filtered from _MAX_ total records)"
+        };
+
+        var slovak = {
+            "sEmptyTable": "Nie sú k dispozícii žiadne dáta",
+            "sInfo": "Záznamy _START_ až _END_ z celkom _TOTAL_",
+            "sInfoEmpty": "Záznamy 0 až 0 z celkom 0 ",
+            "sInfoFiltered": "(vyfiltrované spomedzi _MAX_ záznamov)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Zobraz _MENU_ záznamov",
+            "sLoadingRecords": "Načítavam...",
+            "sProcessing": "Spracúvam...",
+            "sSearch": "Hľadať:",
+            "sZeroRecords": "Nenašli sa žiadne vyhovujúce záznamy",
+            "oPaginate": {
+                "sFirst": "Prvá",
+                "sLast": "Posledná",
+                "sNext": "Nasledujúca",
+                "sPrevious": "Predchádzajúca"
+            },
+            "oAria": {
+                "sSortAscending": ": aktivujte na zoradenie stĺpca vzostupne",
+                "sSortDescending": ": aktivujte na zoradenie stĺpca zostupne"
+            }
+        };
+
+        var currentLang = slovak;
+
         const table = $('#MailTable').DataTable({
             autoWidth: true,
             ordering: true,
@@ -87,30 +120,7 @@ if (0 < $result->num_rows) {
             processing: true,
             searching: false,
             stateSave: true,
-            language:
-                {
-                    "sEmptyTable": "Nie sú k dispozícii žiadne dáta",
-                    "sInfo": "Záznamy _START_ až _END_ z celkom _TOTAL_",
-                    "sInfoEmpty": "Záznamy 0 až 0 z celkom 0 ",
-                    "sInfoFiltered": "(vyfiltrované spomedzi _MAX_ záznamov)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Zobraz _MENU_ záznamov",
-                    "sLoadingRecords": "Načítavam...",
-                    "sProcessing": "Spracúvam...",
-                    "sSearch": "Hľadať:",
-                    "sZeroRecords": "Nenašli sa žiadne vyhovujúce záznamy",
-                    "oPaginate": {
-                        "sFirst": "Prvá",
-                        "sLast": "Posledná",
-                        "sNext": "Nasledujúca",
-                        "sPrevious": "Predchádzajúca"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": aktivujte na zoradenie stĺpca vzostupne",
-                        "sSortDescending": ": aktivujte na zoradenie stĺpca zostupne"
-                    }
-                },
+            language: currentLang,
             select: true
         });
     </script>
