@@ -10,17 +10,17 @@ require_once('../../src/helpers.php');
 <body>
 <?php include('../nav.php'); ?>
 <div class="page-wrapper">
-    <h2 data-translate>Ulohy</h2>
+    <h2 data-translate="">Ulohy</h2>
 
     <table border="1">
         <thead>
-            <tr class="table-dark">
-                <th>Tomas Benco</th>
-                <th>Dinh Nguyen Tien</th>
-                <th>Martin Filo</th>
-                <th>Radoslav Hlatky</th>
-                <th>Dominik Simko</th>
-            </tr>
+        <tr class="table-dark">
+            <th>Tomas Benco</th>
+            <th>Dinh Nguyen Tien</th>
+            <th>Martin Filo</th>
+            <th>Radoslav Hlatky</th>
+            <th>Dominik Simko</th>
+        </tr>
         </thead>
         <tbody>
         <tr>
@@ -32,43 +32,43 @@ require_once('../../src/helpers.php');
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
+            <td>Log in/off admina a usera</td>
             <td>Preklady</td>
             <td>Preklady</td>
             <td>Preklady</td>
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
+            <td>Admin page</td>
             <td>Navrh frontendu</td>
             <td>Navrh a tvorba frontendu</td>
             <td>Tvorba sablony</td>
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
+            <td>Admin - vyber predmetu (vyuzitie api, tabulka)</td>
             <td>Admin page</td>
             <td>Admin page</td>
             <td>Import csv suboru s udajmi o osobach</td>
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
+            <td>Admin - vyber predmetu (vyuzitie api)</td>
             <td>Nahranie a spracovanie CSV</td>
             <td>Navrh projektovej struktury</td>
             <td>Generovanie hesiel</td>
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
-            <td>Vytvorenie studenta, timu (CSV->DB)</td>
-            <td></td>
+            <td>USER - predmety</td>
+            <td>Vytvorenie studenta, timu (CSV-&gt;DB)</td>
+            <td>Responzívny dizajn</td>
             <td>Generovanie udajov pre prihlasenie na server</td>
         </tr>
         <tr>
             <td>t</td>
-            <td>d</td>
-            <td>Vytvorenie zaznamov o bodoch (CSV->DB)</td>
+            <td>Tlac tabuliek</td>
+            <td>Vytvorenie zaznamov o bodoch (CSV-&gt;DB)</td>
             <td></td>
             <td>Csv na stiahnutie</td>
         </tr>
