@@ -20,7 +20,6 @@ require_once('../../src/helpers.php');
         <table id="projectTable" class="table" style="width: 75%">
             <thead>
             <th>Meno projektu</th>
-            <th></th>
             </thead>
             <tbody>
 
