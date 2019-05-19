@@ -6,24 +6,6 @@ if (!isset($_SESSION) || !isset($_SESSION["uid"]) || $_SESSION["username"] != 'a
     return;
 }
 
-// Create connection
-$conn = new mysqli($hostname, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-$conn->set_charset("utf8");
-$sql = "SELECT * FROM `mail_statistics`";
-
-$result = $conn->query($sql);
-
-$data = [];
-if (0 < $result->num_rows) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-}
-
 $projectID = 25;
 if (isset($_GET['project']))
     $projectID = $_GET['project'];
