@@ -47,9 +47,9 @@ if(isset($_GET['subjectToDelete'])){
 }
 ?>
 
-<div id='tables' class="page-wrapper"></div>
-<div class="page-wrapper">
-    <button id='printButton' class="btn btn-primary page-wrapper" onclick="printDiv()" hidden="true">Print</button>
+<div id='tables' class="page-wrapper" hidden></div>
+<div id='printButton' class="page-wrapper" hidden>
+    <button  class="btn btn-primary page-wrapper" onclick="printDiv('tables')">Print</button>
 <!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
     <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 </div>
@@ -57,7 +57,7 @@ if(isset($_GET['subjectToDelete'])){
 <script>
     let login = '<?php echo $_SESSION["username"]?>';
    if(login !== "admin"){
-       printTables(login, 1)
+       printSubjectTables(login, 1)
    }
 </script>
 
@@ -70,4 +70,47 @@ if(isset($responseMessage) && $responseMessage != '') {
 }
 
 ?>
+<div class = "page-wrapper">
+    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data"
+          id="chooseProject">
+        <div class="form-group combo-wrapper async">
+            <label for="subject-import" class="combo"><span data-translate>Vyber</span> <span
+                        data-translate>predmet</span></label>
+            <input type="text" class="form-control combo" id="subject-import" name="subject" required
+                   autocomplete="off">
+            <ul class="jumbotron" style="display: none;" id="subject-list-import">
+                <li data-disabled="true">Udaje sa načítavajú</li>
+            </ul>
+        </div>
+
+        <div class="form-group combo-wrapper async">
+            <label for="project-import" class="combo"><span data-translate>Vyber</span> <span
+                        data-translate>projekt</span></label>
+            <input type="text" class="form-control combo" id="project-import" name="project" required
+                   autocomplete="off"
+                   disabled>
+            <ul class="jumbotron" style="display: none;" id="project-list-import">
+                <li data-disabled="true">Udaje sa načítavajú</li>
+            </ul>
+        </div>
+        <div class="response-message">
+            <?php if (isset($users)) {
+                echo $users->getMessage();
+                echo "<script>$('.nav-tabs a[href=\"#import-users\"]').tab('show');</script>";
+            } ?>
+        </div>
+	    <p id="responseMessagae-proj"></p>
+        <button type="submit" name="users" class="btn btn-primary">Zobraziť</button>
+	    <button id="deleteButton-proj" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true">Vymazať</button>
+    </form>
+
+	<div id="tables-proj" hidden></div>
+
+	<div id='printButton-proj' hidden>
+			<button  class="btn btn-primary page-wrapper" onclick="printDiv('tables-proj')">Print</button>
+			<!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
+			<iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+		</div>
+
+</div>
 </body>

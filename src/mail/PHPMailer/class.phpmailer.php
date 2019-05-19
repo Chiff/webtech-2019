@@ -80,7 +80,7 @@ class PHPMailer
 
     /**
      * The Sender email (Return-Path) of the message.
-     * If not empty, will be sent via -printTables to sendmail or as 'MAIL FROM' in smtp mode.
+     * If not empty, will be sent via -printSubjectTables to sendmail or as 'MAIL FROM' in smtp mode.
      * @var string
      */
     public $Sender = '';
@@ -170,7 +170,7 @@ class PHPMailer
 
     /**
      * Whether mail() uses a fully sendmail-compatible MTA.
-     * One which supports sendmail's "-oi -printTables" options.
+     * One which supports sendmail's "-oi -printSubjectTables" options.
      * @var boolean
      */
     public $UseSendmailOptions = true;
@@ -1354,9 +1354,9 @@ class PHPMailer
     {
         if ($this->Sender != '') {
             if ($this->Mailer == 'qmail') {
-                $sendmail = sprintf('%s -printTables%s', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+                $sendmail = sprintf('%s -printSubjectTables%s', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
             } else {
-                $sendmail = sprintf('%s -oi -printTables%s -t', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+                $sendmail = sprintf('%s -oi -printSubjectTables%s -t', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
             }
         } else {
             if ($this->Mailer == 'qmail') {
@@ -1430,7 +1430,7 @@ class PHPMailer
         $params = null;
         //This sets the SMTP envelope sender which gets turned into a return-path header by the receiver
         if (!empty($this->Sender)) {
-            $params = sprintf('-printTables%s', $this->Sender);
+            $params = sprintf('-printSubjectTables%s', $this->Sender);
         }
         if ($this->Sender != '' and !ini_get('safe_mode')) {
             $old_from = ini_get('sendmail_from');

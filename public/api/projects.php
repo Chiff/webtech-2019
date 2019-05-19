@@ -58,7 +58,11 @@ foreach ($teams as $oneTeam) {
                 writeError(400, 'Bad Request', "Chyba pri ziskavani udajov o studentovi. Warning: $conn->error");
                 continue;
             }
-            $value["student"] = $result->fetch_all(MYSQLI_ASSOC);
+
+            $student = $result->fetch_all(MYSQLI_ASSOC);
+            $value["name"] = $student[0]["name"];
+            $value["email"] = $student[0]["email"];
+            
             array_push($item["teammates"], $value);
         }
         $ret = $item;
