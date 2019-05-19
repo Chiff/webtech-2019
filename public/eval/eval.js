@@ -1,10 +1,12 @@
+const nopoints = "neudelené";
+
 function updateTable(response) {
     $.each(response, function (index, project) {
         var link = null;
         if (uid !== project.captain_id) {
-            link = "<a href=\"eval-teammate.php?project_name=" + getProjectName(project.project_id) + "&project_id=" + project.project_id + "\" class=\"btn btn-outline-primary\">" + getProjectName(project.project_id) + "</a>";
+            link = "<a href=\"eval-teammate.php?project_name=" + getProjectName(project.project_id) + "&project_id=" + project.project_id + "&team_id=" + project.id + "&project_points=" + (project.points != null ? project.points : nopoints) + "\" class=\"btn btn-outline-primary\">" + getProjectName(project.project_id) + "</a>";
         } else {
-            link = "<a href=\"eval-captain.php?project_name=" + getProjectName(project.project_id) + "&project_id=" + project.project_id + "\" class=\"btn btn-outline-primary\">" + getProjectName(project.project_id) + "</a>";
+            link = "<a href=\"eval-captain.php?project_name=" + getProjectName(project.project_id) + "&project_id=" + project.project_id + "&team_id=" + project.id + "&project_points=" + (project.points != null ? project.points : nopoints) + "\" class=\"btn btn-outline-primary\">" + getProjectName(project.project_id) + "</a>";
         }
         $('<tr>').append(
             $('<td>').html(link)
@@ -36,27 +38,38 @@ function updateTeam(team) {
     $('#teamTable tbody tr').remove();
 
     $.each(team, function (index, student) {
-        if (uid == student.student_id) {
+        if (uid == student.student_id && student.agree == null) {
             $('<tr>').append(
-                $('<td>').text(student.student[0].name),
-                $('<td>').text(student.result != null ? student.result : 0),
-                $('<td>').html("<button id='nopeBtn' class=\"btn btn-outline-secondary\">Nesúhlasím</button>\n" +
+                $('<td>').text(student.name),
+                $('<td>').text(student.result != null ? student.result : nopoints),
+                $('<td>').html("<button id='nopeBtn' data-toggle=\"modal\" data-target=\"#disagreeModal\" class=\"btn btn-outline-secondary\">Nesúhlasím</button>\n" +
                     "<button id='okBtn' data-toggle=\"modal\" data-target=\"#agreeModal\" class=\"btn btn-outline-primary\">Súhlasím</button>")
             ).appendTo('#teamTable');
         } else {
             $('<tr>').append(
-                $('<td>').text(student.student[0].name),
-                $('<td>').text(student.result != null ? student.result : 0),
+                $('<td>').text(student.name),
+                $('<td>').text(student.result != null ? student.result : nopoints),
                 $('<td>').html("")
             ).appendTo('#teamTable');
         }
     });
 }
 
-function agreeResult() {
+function agreeResult(agree, team) {
 
-}
-
-function agreeResult(student_id) {
-
+    $.ajax({
+        url: "update-student-agreement.php",
+        type: "post",
+        async: false,
+        cache: false,
+        timeout: 30000,
+        data: {agree: agree, team: team},
+        success: function (response) {
+            console.log("Updated succesfully...");
+            //location.reload();
+        },
+        error: function (xhr) {
+            console.log("something went terribly wrong, but I dunno what...\n" + xhr)
+        }
+    });
 }

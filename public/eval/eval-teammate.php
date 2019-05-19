@@ -18,7 +18,7 @@ require_once('../../src/helpers.php');
 <div class="mainContainer">
     <div class="d-flex justify-content-center">
         <table id="teamTable" class="table" style="width: 75%">
-            <caption><?php echo $_GET['project_name'] ?></caption>
+            <caption><?php echo $_GET['project_name'] ?> Udelené body: <?php echo $_GET['project_points'] ?> </caption>
             <thead>
             <th>Meno a priezvisko</th>
             <th>Pridelené body</th>
@@ -38,14 +38,39 @@ require_once('../../src/helpers.php');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Súhlas s rozdelením bodov</h4>
             </div>
             <div class="modal-body">
                 <p>Naozaj súhlasíte s rozdelením bodov?<br>Rozhodnutie po odsúhlasení bude nemenné.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">zrušiť</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Pokračovať</button>
+                <button type="button" class="btn btn-default" onclick="agreeResult(1,<?php echo $_GET['team_id']; ?>)"
+                        data-dismiss="modal">Pokračovať
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="disagreeModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nesúhlas s rozdelením bodov</h4>
+            </div>
+            <div class="modal-body">
+                <p>Naozaj nesúhlasíte s rozdelením bodov?<br>Rozhodnutie po neodsúhlasení bude nemenné.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">zrušiť</button>
+                <button type="button" class="btn btn-default" onclick="agreeResult(0,<?php echo $_GET['team_id']; ?>)"
+                        data-dismiss="modal">Pokračovať
+                </button>
             </div>
         </div>
 
