@@ -38,5 +38,15 @@
   "Varovania pri importe": "Import warnings",
   "ID projektu nie je spravne. Upload sa rusi!": "Project ID is incorrect. Upload cancelled!",
   "Data sa nepodarilo ziskat alebo nastala chyba vo validacii CSV": "Data could not be obtained or CSV validation error occurred",
-  "Validacia prebehla bez chyby!": "Validation success!"
+  "Validacia prebehla bez chyby!": "Validation success!",
+  "Import suboru": "Import file",
+  "Import csv suboru": "Import CSV file",
+  "Meno a priezvisko": "Name and surname",
+  "Sablona": "Template",
+  "Editacia sablony": "Template edit",
+  "Stiahnut CSV subor": "Download CSV file",
+  "Uspesne importovane": "Successfully Imported",
+  "Heslo:": "Password",
+  "Predmet:": "Subject",
+  "Subor:": "File"
 }
