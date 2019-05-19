@@ -10,7 +10,7 @@
 		<div class="navbar-nav mt-1">
 			<a class="nav-item nav-link" href="<?php echo $baseFolder?>/public/" data-translate>Uvod</a>
             <?php if ($_SESSION['username'] == 'admin') echo '<a class="nav-item nav-link" href=' . $baseFolder. '/public/admin>Admin</a>'?>
-            <?php if ($_SESSION['username'] == 'admin') echo '<a class="nav-item nav-link" href=' . $baseFolder. '/public/info>Ulohy</a>'?>
+            <?php if ($_SESSION['username'] == 'admin') echo '<a class="nav-item nav-link" href=' . $baseFolder. '/public/info data-translate>Ulohy</a>'?>
 		</div>
 
 		<div class="form-inline my-2 ml-auto">
