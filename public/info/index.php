@@ -56,7 +56,7 @@ require_once('../../src/helpers.php');
             <td>d</td>
             <td>Nahranie a spracovanie CSV</td>
             <td>Navrh projektovej struktury</td>
-            <td>Generovanie hesiel a csv na stiahnutie</td>
+            <td>Generovanie hesiel</td>
         </tr>
         <tr>
             <td>t</td>
@@ -70,7 +70,7 @@ require_once('../../src/helpers.php');
             <td>d</td>
             <td>Vytvorenie zaznamov o bodoch (CSV->DB)</td>
             <td></td>
-            <td></td>
+            <td>Csv na stiahnutie</td>
         </tr>
         <tr>
             <td>t</td>
