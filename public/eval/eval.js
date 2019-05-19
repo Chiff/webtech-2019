@@ -1,4 +1,8 @@
-const nopoints = "neudelené";
+const nopoints = "Neudelené";
+const noresp = "Bez odpovede";
+const ok = "Súhlas";
+const nok = "Nesúhlas";
+
 
 function updateTable(response) {
     $.each(response, function (index, project) {
@@ -49,7 +53,7 @@ function updateTeam(team) {
             $('<tr>').append(
                 $('<td>').text(student.name),
                 $('<td>').text(student.result != null ? student.result : nopoints),
-                $('<td>').html("")
+                $('<td>').html(student.agree != null ? (student.agree ? ok : nok) : noresp)
             ).appendTo('#teamTable');
         }
     });
@@ -58,7 +62,7 @@ function updateTeam(team) {
 function agreeResult(agree, team) {
 
     $.ajax({
-        url: "update-student-agreement.php",
+        url: "../../src/eval/update-student-agreement.php",
         type: "post",
         async: false,
         cache: false,
@@ -66,7 +70,7 @@ function agreeResult(agree, team) {
         data: {agree: agree, team: team},
         success: function (response) {
             console.log("Updated succesfully...");
-            //location.reload();
+            location.reload();
         },
         error: function (xhr) {
             console.log("something went terribly wrong, but I dunno what...\n" + xhr)
