@@ -84,6 +84,9 @@ $(document).ready(() => {
 		$subject.val($subject.attr('data-id'));
 	});
 
+	$('#inputGroupFile01').change(function (e) {
+		$(this).next('.custom-file-label').html(e.target.files[0].name);
+	});
 	$('#inputGroupFile02').change(function (e) {
 		$(this).next('.custom-file-label').html(e.target.files[0].name);
 	});

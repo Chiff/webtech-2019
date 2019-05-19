@@ -18,7 +18,7 @@ if(isset($_GET['subjectToDelete'])){
 ?>
 <!DOCTYPE html>
 <head>
-    <title>Uvod</title>
+    <title data-translate>Uvod</title>
     <?php include('head.php'); ?>
     <?php echo "<script src='comboBoxForResult.js' type='module'></script>"; // lebo php ¯\_(ツ)_/¯ ?>
 </head>
@@ -33,15 +33,15 @@ if(isset($_GET['subjectToDelete'])){
 <div class = "page-wrapper">
 <form action="index.php" method="post" id="chooseSubject">
     <div class="form-group combo-wrapper async">
-        <label for="subject" class="combo">Predmet</label>
+        <label for="subject" class="combo" data-translate>Predmet</label>
         <input type="text" id="subject" class="form-control combo" name="subject" required autocomplete="off">
         <ul class="jumbotron" style="display: none;" id="subject-list">
-            <li data-disabled="true">Udaje sa načítavajú</li>
+            <li data-disabled="true" data-translate>Udaje sa načítavajú</li>
         </ul>
     </div>  
     <p id="responseMessage"></p>
-        <button type="submit" class="btn btn-primary" name="chooseSubject">Zobraziť</button>
-        <button id="deleteButton" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true">Vymazať</button>
+        <button type="submit" class="btn btn-primary" name="chooseSubject" data-translate>Zobraziť</button>
+        <button id="deleteButton" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true" data-translate>Vymazať</button>
 </form>
 </div>';
 }
@@ -49,7 +49,7 @@ if(isset($_GET['subjectToDelete'])){
 
 <div id='tables' class="page-wrapper" hidden></div>
 <div id='printButton' class="page-wrapper" hidden>
-    <button  class="btn btn-primary page-wrapper" onclick="printDiv('tables')">Print</button>
+    <button  class="btn btn-primary page-wrapper" onclick="printDiv('tables')" data-translate>Tlačiť</button>
 <!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
     <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 </div>
@@ -79,7 +79,7 @@ if(isset($responseMessage) && $responseMessage != '') {
             <input type="text" class="form-control combo" id="subject-import" name="subject" required
                    autocomplete="off">
             <ul class="jumbotron" style="display: none;" id="subject-list-import">
-                <li data-disabled="true">Udaje sa načítavajú</li>
+                <li data-disabled="true" data-translate>Udaje sa načítavajú</li>
             </ul>
         </div>
 
@@ -90,7 +90,7 @@ if(isset($responseMessage) && $responseMessage != '') {
                    autocomplete="off"
                    disabled>
             <ul class="jumbotron" style="display: none;" id="project-list-import">
-                <li data-disabled="true">Udaje sa načítavajú</li>
+                <li data-disabled="true" data-translate>Udaje sa načítavajú</li>
             </ul>
         </div>
         <div class="response-message">
@@ -100,14 +100,14 @@ if(isset($responseMessage) && $responseMessage != '') {
             } ?>
         </div>
 	    <p id="responseMessagae-proj"></p>
-        <button type="submit" name="users" class="btn btn-primary">Zobraziť</button>
-	    <button id="deleteButton-proj" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true">Vymazať</button>
+        <button type="submit" name="users" class="btn btn-primary" data-translate>Zobraziť</button>
+	    <button id="deleteButton-proj" type="submit" class="btn btn-primary" name="chooseSubject" hidden="true" data-translate>Vymazať</button>
     </form>
 
 	<div id="tables-proj" hidden></div>
 
 	<div id='printButton-proj' hidden>
-			<button  class="btn btn-primary page-wrapper" onclick="printDiv('tables-proj')">Print</button>
+			<button  class="btn btn-primary page-wrapper" onclick="printDiv('tables-proj')" data-translate>Tlačiť</button>
 			<!--    <button id='printButton2' class="btn btn-primary page-wrapper" onclick="printAll()" hidden="true">Print All</button>-->
 			<iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 		</div>

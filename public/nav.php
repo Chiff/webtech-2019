@@ -8,7 +8,7 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav mt-1">
-			<a class="nav-item nav-link" href="<?php echo $baseFolder?>/public/">Uvod</a>
+			<a class="nav-item nav-link" href="<?php echo $baseFolder?>/public/" data-translate>Uvod</a>
             <?php if ($_SESSION['username'] == 'admin') echo '<a class="nav-item nav-link" href=' . $baseFolder. '/public/admin>Admin</a>'?>
 		</div>
 
